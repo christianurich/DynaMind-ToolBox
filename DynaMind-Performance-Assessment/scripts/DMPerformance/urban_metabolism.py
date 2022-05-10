@@ -8,7 +8,7 @@ from osgeo import ogr
 from datetime import datetime
 
 logging.basicConfig(level=logging.INFO)
-from wbmodel import WaterCycleModel, Streams, LotStream, SoilParameters, UnitFlows, DemandProfile, annual_sum
+from wbmodel import WaterCycleModel, Streams, LotStream, SoilParameters, SoilParameters_Irrigation, UnitFlows, DemandProfile, annual_sum
 
 class UrbanMetabolismModel(Module):
 
@@ -23,7 +23,11 @@ class UrbanMetabolismModel(Module):
         self.setIsGDALModule(True)
 
         self.createParameter("from_rain_station", DM.BOOL)
-        self.from_rain_station = False
+        self.createParameter('irrigation_module', DM.BOOL)
+        self.from_rain_station = True
+
+        # Used to turn new catchment model on and off
+        self.irrigation_module = False
 
     def init(self):
 
@@ -33,7 +37,6 @@ class UrbanMetabolismModel(Module):
         self.lot.addAttribute("roof_area", DM.Attribute.DOUBLE, DM.READ)
         self.lot.addAttribute("outdoor_imp", DM.Attribute.DOUBLE, DM.READ)
         self.lot.addAttribute("garden_area", DM.Attribute.DOUBLE, DM.READ)
-        # self.lot.addAttribute("tree_cover", DM.Attribute.DOUBLE, DM.READ)
 
         for i in range(1, 10):
             self.lot.addAttribute(f"wb_sub_catchment_id_{i}", DM.Attribute.INT, DM.READ)
@@ -95,10 +98,17 @@ class UrbanMetabolismModel(Module):
         self.green_roofs = ViewContainer('green_roof', DM.COMPONENT, DM.READ)
         self.green_roofs.addAttribute("wb_soil_id", DM.Attribute.INT, DM.READ)
 
-        self.wb_soil_parameters = ViewContainer('wb_soil', DM.COMPONENT, DM.READ)
+        
+        # depending on the catchment model to be used load in the correct soil moisture data
+        if self.irrigation_module == 1:
+            self.wb_soil_parameters = ViewContainer('wb_soil_irrigated', DM.COMPONENT, DM.READ)
+            for s in SoilParameters_Irrigation:
+                self.wb_soil_parameters.addAttribute(str(s).split(".")[1], DM.Attribute.DOUBLE, DM.READ)
+        else:
+            self.wb_soil_parameters = ViewContainer('wb_soil', DM.COMPONENT, DM.READ)
+            for s in SoilParameters:
+                self.wb_soil_parameters.addAttribute(str(s).split(".")[1], DM.Attribute.DOUBLE, DM.READ)
 
-        for s in SoilParameters:
-            self.wb_soil_parameters.addAttribute(str(s).split(".")[1], DM.Attribute.DOUBLE, DM.READ)
 
         self.wb_unit_flows = ViewContainer('wb_unit_flow', DM.COMPONENT, DM.WRITE)
         for s in UnitFlows:
@@ -148,11 +158,20 @@ class UrbanMetabolismModel(Module):
 
         soils = {}
         for s in self.wb_soil_parameters:
+            
             soil_id = s.GetFID()
+            
             soil = {}
-            for p in SoilParameters:
+
+            if self.irrigation_module == 1:
+                soil_params = SoilParameters_Irrigation
+            else: 
+                soil_params = SoilParameters
+
+            for p in soil_params:
                 soil[p] = s.GetFieldAsDouble(str(p).split(".")[1])
             soils[soil_id] = soil
+
 
         demand_profile = {}
         for s in self.wb_demand_profile:
@@ -162,9 +181,11 @@ class UrbanMetabolismModel(Module):
                 profile[p] = s.GetFieldAsDouble(str(p).split(".")[1])
             demand_profile[demand_id] = profile
         self.wb_demand_profile.finalise()
+        
 
         for s in self.wb_lot_streams:
             s: ogr.Feature
+            
             wb_template_id = s.GetFieldAsInteger("wb_lot_template_id")
             out_stream = Streams(s.GetFieldAsInteger("outflow_stream_id"))
             lot_stream = LotStream(s.GetFieldAsInteger("lot_stream_id"))
@@ -280,7 +301,6 @@ class UrbanMetabolismModel(Module):
 
         stations, dates = self._load_station()
 
-
         wb = WaterCycleModel(lots=lots,
                              sub_catchments=sub_catchments,
                              wb_lot_to_sub_catchments=sub_catchments_lots,
@@ -347,8 +367,10 @@ class UrbanMetabolismModel(Module):
             f.SetField("station_id", station_id)
             f.SetField("wb_demand_profile_id", wb_demand_profile_id)
             for s in UnitFlows:
-                dm_set_double_list(f, str(s).split(".")[1],
-                                   item[s])
+                # check if unit_flow is available as they differ betweem the different models
+                if s in item:
+                    dm_set_double_list(f, str(s).split(".")[1],
+                                    item[s])
         self.wb_unit_flows.finalise()
 
         for l in self.lot:
@@ -409,6 +431,27 @@ class UrbanMetabolismModel(Module):
                 start_date = datetime.strptime(t.GetFieldAsString("start"), '%d.%m.%Y %H:%M:%S').strftime('%Y-%b-%d %H:%M:%S')
                 end_date = datetime.strptime(t.GetFieldAsString("end"), '%d.%m.%Y %H:%M:%S').strftime('%Y-%b-%d %H:%M:%S')
             self.timeseries.finalise()
+
+        # Check and cleanup
+
+        # @TODO to deal with copprupt data at the start
+        for station_id, station in stations.items():
+            if "potential pt data" in station:
+                vec =  station["potential pt data"]
+                # remove first two elements
+                vec = vec[2:]
+                station["potential pt data"] = vec
+
+            if "irrigation" in station:
+                vec = station["irrigation"]
+                # remove first two elements
+                vec = vec[2:]
+                station["irrigation"] = vec
+
+        # @TODO make sure data streams are the same length
+                
+
+        print(stations)
 
         return stations, (start_date, end_date)
 
