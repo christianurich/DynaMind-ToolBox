@@ -96,7 +96,7 @@ class UnitParameters:
 
         lot_area = 500
         perv_area_fra = 0.2
-        roof_imp_fra = 0
+        roof_imp_fra = 0.5
 
 
         # get the keys of the soil parameters of the model. These will be different depending on what model is being used and thus can be
