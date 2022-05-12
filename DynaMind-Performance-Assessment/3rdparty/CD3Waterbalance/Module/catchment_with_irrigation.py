@@ -197,7 +197,7 @@ class Catchment_w_Irrigation(pycd3.Node):
         self.pervious_level[0] = self.current_perv_storage_level
         self.Perv_Rainstorage[0] = self.rain_storage_perv
 
-        self.soil_moisture[0] = (self.current_perv_storage_level / self.perv_soil_storage_capacity) * 100
+        self.soil_moisture[0] = (self.current_perv_storage_level *1000) / (self.perv_soil_storage_capacity*1000) * 100
         
         # write a mass balance test to ensure all the streams are adding up
         self.mass_balance_test()
