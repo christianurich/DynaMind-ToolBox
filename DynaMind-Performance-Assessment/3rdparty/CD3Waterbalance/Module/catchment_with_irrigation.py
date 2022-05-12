@@ -26,6 +26,7 @@ class Catchment_w_Irrigation(pycd3.Node):
         self.poss_infiltration = pycd3.Flow()
         self.pervious_level = pycd3.Flow()
         self.Perv_Rainstorage = pycd3.Flow()
+        self.soil_moisture = pycd3.Flow()
         
 
         # in ports
@@ -47,6 +48,7 @@ class Catchment_w_Irrigation(pycd3.Node):
         self.addOutPort("outdoor_demand", self.irrigation_required) # not sure about this one just yet
         self.addOutPort('pervious_storage', self.pervious_level)
         self.addOutPort('Perv_Rainstorage', self.Perv_Rainstorage)
+        self.addOutPort('soil_moisture', self.soil_moisture)
 
 
         # parameters to be set by dynamind
@@ -194,6 +196,8 @@ class Catchment_w_Irrigation(pycd3.Node):
 
         self.pervious_level[0] = self.current_perv_storage_level
         self.Perv_Rainstorage[0] = self.rain_storage_perv
+
+        self.soil_moisture[0] = (self.current_perv_storage_level / self.perv_soil_storage_capacity) * 100
         
         # write a mass balance test to ensure all the streams are adding up
         self.mass_balance_test()

@@ -51,6 +51,7 @@ class UnitFlows(Enum):
     pervious_evapotranspiration_irrigated = 13
     impervious_evapotranspiration = 14
     roof_evapotranspiration = 15
+    soil_moisture = 16
 
 
 class UnitParameters:
@@ -187,6 +188,7 @@ class UnitParameters:
             reporting[UnitFlows.pervious_evapotranspiration_irrigated] = {"port": "pervious_evapotranspiration", "factor": (lot_area * (perv_area_fra))}
             reporting[UnitFlows.impervious_evapotranspiration] = {"port": "impervious_evapotranspiration", "factor": (lot_area * (1 - perv_area_fra - roof_imp_fra))}
             reporting['Perv_Rainstorage'] = {"port": "Perv_Rainstorage", "factor": (lot_area * (perv_area_fra))}
+            reporting[UnitFlows.soil_moisture] = {"port": "soil_moisture", "factor": 1}
 
         #set up the city model and register the python plugins
 
