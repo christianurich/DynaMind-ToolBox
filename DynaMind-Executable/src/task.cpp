@@ -125,7 +125,7 @@ string replacestrings(string &replace, string projectfilepath)
 void setSettings(std::string s)
 {
     QStringList avalible_settings;
-    avalible_settings << "SWMM";
+    avalible_settings << "SWMM" << "pythonModules";
     QString setting = QString::fromStdString(s);
     QStringList sl = setting.split("=");
     if (sl.size() != 2)
@@ -142,6 +142,7 @@ void setSettings(std::string s)
         return;
     }
     QSettings settings;
+    std::cout << "Setting " << sl[0].toStdString() << " to " << sl[1].toStdString() << std::endl;
     settings.setValue(sl[0], sl[1]);
 }
 
@@ -334,8 +335,6 @@ void Task::run()
 
         if (vm.count("settings")) {
             setSettings(vm["settings"].as<string>());
-            QCoreApplication::exit(1);
-            return;
         }
 
         if (vm.count("help"))
@@ -498,6 +497,7 @@ void Task::run()
     }
 
     s.registerModulesFromDefaultLocation();
+    std::cout << "register models" << std::endl;
     s.registerModulesFromSettings();
     realsimulationfile = replacestrings(replace, simulationfile);
 
