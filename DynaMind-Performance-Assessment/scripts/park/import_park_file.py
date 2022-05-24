@@ -17,7 +17,7 @@ class ImportParkFile(dm.Module):
         dm.Module.__init__(self)
         self.setIsGDALModule(True)
 
-        self.createParameter("filename", dm.STRING, "Name of json file")
+        self.createParameter("filename", dm.FILENAME, "Name of json file")
         self.filename = ""
 
         views = []
