@@ -1,0 +1,462 @@
+<DynaMind>
+  <Info Version="0.5"/>
+  <DynaMindCore>
+    <Settings>
+      <EPSG value="3857"/>
+      <WorkingDir value="/tmp"/>
+      <KeepSystems value="0"/>
+    </Settings>
+    <Nodes>
+      <RootNode>
+        <UUID value="0"/>
+      </RootNode>
+      <Node>
+        <ClassName value="GDALHotStarter"/>
+        <UUID value="1c0147e3-b251-44c2-bbbe-ebcafb1f2035"/>
+        <Name value="load_simulation"/>
+        <GroupUUID value="0"/>
+        <parameter name="hot_start_database">/workspaces/DynaMind-ToolBox/tests/FINAL/databases/base.sqlite</parameter>
+      </Node>
+      <Node>
+        <ClassName value="DMLoopGroup"/>
+        <UUID value="cfbd98ef-68d5-4f32-ac9f-9e1544daa520"/>
+        <Name value="add_soil"/>
+        <GroupUUID value="0"/>
+        <parameter name="writeStreams">city*|*</parameter>
+        <parameter name="readStreams"></parameter>
+      </Node>
+      <Node>
+        <ClassName value="DM_CreateComponent"/>
+        <UUID value="048be11f-fa17-4cad-8fa2-b3198a3998e8"/>
+        <Name value="add_container"/>
+        <GroupUUID value="cfbd98ef-68d5-4f32-ac9f-9e1544daa520"/>
+        <parameter name="lead_view_name">wb_soil_irrigated</parameter>
+        <parameter name="component_type">COMPONENT</parameter>
+        <parameter name="create_empty">0</parameter>
+        <parameter name="append">1</parameter>
+      </Node>
+      <Node>
+        <ClassName value="GDALAttributeCalculator"/>
+        <UUID value="f8cedf9b-9ec6-46ec-b776-55e314294064"/>
+        <Name value="Add_Parameter_horton_inital_infiltration"/>
+        <GroupUUID value="0"/>
+        <parameter name="attribute">wb_soil_irrigated.horton_inital_infiltration</parameter>
+        <parameter name="attribute_type">Double</parameter>
+        <parameter name="equation">0.09</parameter>
+      </Node>
+      <Node>
+        <ClassName value="GDALAttributeCalculator"/>
+        <UUID value="04176d95-53e6-4122-a228-fc349200078e"/>
+        <Name value="Add_Parameter_horton_final_infiltration"/>
+        <GroupUUID value="0"/>
+        <parameter name="attribute">wb_soil_irrigated.horton_final_infiltration</parameter>
+        <parameter name="attribute_type">Double</parameter>
+        <parameter name="equation">0.001</parameter>
+      </Node>
+      <Node>
+        <ClassName value="GDALAttributeCalculator"/>
+        <UUID value="e6b3b3db-b642-4113-9023-05b319ef8019"/>
+        <Name value="Add_Parameter_horton_decay_constant"/>
+        <GroupUUID value="0"/>
+        <parameter name="attribute">wb_soil_irrigated.horton_decay_constant</parameter>
+        <parameter name="attribute_type">Double</parameter>
+        <parameter name="equation">0.06</parameter>
+      </Node>
+      <Node>
+        <ClassName value="GDALAttributeCalculator"/>
+        <UUID value="b7a3a50e-4403-4d6b-b106-148566322cf0"/>
+        <Name value="Add_Parameter_wilting_point"/>
+        <GroupUUID value="0"/>
+        <parameter name="attribute">wb_soil_irrigated.wilting_point</parameter>
+        <parameter name="attribute_type">Double</parameter>
+        <parameter name="equation">0.09</parameter>
+      </Node>
+      <Node>
+        <ClassName value="GDALAttributeCalculator"/>
+        <UUID value="f5a50b02-653f-41ac-abc8-1ac46be27b57"/>
+        <Name value="Add_Parameter_field_capactiy"/>
+        <GroupUUID value="0"/>
+        <parameter name="attribute">wb_soil_irrigated.field_capactiy</parameter>
+        <parameter name="attribute_type">Double</parameter>
+        <parameter name="equation">0.22</parameter>
+      </Node>
+      <Node>
+        <ClassName value="GDALAttributeCalculator"/>
+        <UUID value="d74ddd7c-d04d-439f-a432-f1225362c877"/>
+        <Name value="Add_Parameter_saturation"/>
+        <GroupUUID value="0"/>
+        <parameter name="attribute">wb_soil_irrigated.saturation</parameter>
+        <parameter name="attribute_type">Double</parameter>
+        <parameter name="equation">0.4</parameter>
+      </Node>
+      <Node>
+        <ClassName value="GDALAttributeCalculator"/>
+        <UUID value="3ceed070-0ef9-4237-a7e3-4a2ef668dbfe"/>
+        <Name value="Add_Parameter_soil_depth"/>
+        <GroupUUID value="0"/>
+        <parameter name="attribute">wb_soil_irrigated.soil_depth</parameter>
+        <parameter name="attribute_type">Double</parameter>
+        <parameter name="equation">0.03</parameter>
+      </Node>
+      <Node>
+        <ClassName value="GDALAttributeCalculator"/>
+        <UUID value="8ce79c2a-2f4d-429d-bca5-46e81299e8b3"/>
+        <Name value="Add_Parameter_intial_soil_depth"/>
+        <GroupUUID value="0"/>
+        <parameter name="attribute">wb_soil_irrigated.intial_soil_depth</parameter>
+        <parameter name="attribute_type">Double</parameter>
+        <parameter name="equation">0.01</parameter>
+      </Node>
+      <Node>
+        <ClassName value="GDALAttributeCalculator"/>
+        <UUID value="b0726973-6208-4f27-8105-96a32d770a4f"/>
+        <Name value="Add_Parameter_ground_water_recharge_rate"/>
+        <GroupUUID value="0"/>
+        <parameter name="attribute">wb_soil_irrigated.ground_water_recharge_rate</parameter>
+        <parameter name="attribute_type">Double</parameter>
+        <parameter name="equation">0.25</parameter>
+      </Node>
+      <Node>
+        <ClassName value="GDALAttributeCalculator"/>
+        <UUID value="432cfd20-98ab-4f80-92da-08d7ee78525b"/>
+        <Name value="Add_Parameter_transpiration_capacity"/>
+        <GroupUUID value="0"/>
+        <parameter name="attribute">wb_soil_irrigated.transpiration_capacity</parameter>
+        <parameter name="attribute_type">Double</parameter>
+        <parameter name="equation">1</parameter>
+      </Node>
+      <Node>
+        <ClassName value="GDALAttributeCalculator"/>
+        <UUID value="8989a8c4-518a-41db-b539-4a5574533718"/>
+        <Name value="Add_Parameter_initial_loss"/>
+        <GroupUUID value="0"/>
+        <parameter name="attribute">wb_soil_irrigated.initial_loss</parameter>
+        <parameter name="attribute_type">Double</parameter>
+        <parameter name="equation">0.001</parameter>
+      </Node>
+      <Node>
+        <ClassName value="DM_MicroClimate"/>
+        <UUID value="44817eb1-5003-4ac1-9b86-3dfe38635071"/>
+        <Name value="MicroClimateAssessment"/>
+        <GroupUUID value="0"/>
+      </Node>
+      <Node>
+        <ClassName value="DM_ExportSimulationDB"/>
+        <UUID value="0c59d377-fde5-4b14-b102-eccd65334121"/>
+        <Name value="export_database"/>
+        <GroupUUID value="0"/>
+        <parameter name="file_name">/workspaces/DynaMind-ToolBox/tests/FINAL/databases/1_soil</parameter>
+      </Node>
+    </Nodes>
+    <Links>
+      <Link>
+        <BackLink value="0"/>
+        <InPort>
+          <UUID value="048be11f-fa17-4cad-8fa2-b3198a3998e8"/>
+          <PortName value="city"/>
+          <PortType value="0"/>
+        </InPort>
+        <OutPort>
+          <UUID value="cfbd98ef-68d5-4f32-ac9f-9e1544daa520"/>
+          <PortName value="city"/>
+          <PortType value="0"/>
+        </OutPort>
+      </Link>
+      <Link>
+        <BackLink value="0"/>
+        <InPort>
+          <UUID value="cfbd98ef-68d5-4f32-ac9f-9e1544daa520"/>
+          <PortName value="city"/>
+          <PortType value="0"/>
+        </InPort>
+        <OutPort>
+          <UUID value="048be11f-fa17-4cad-8fa2-b3198a3998e8"/>
+          <PortName value="city"/>
+          <PortType value="0"/>
+        </OutPort>
+      </Link>
+      <Link>
+        <BackLink value="0"/>
+        <InPort>
+          <UUID value="cfbd98ef-68d5-4f32-ac9f-9e1544daa520"/>
+          <PortName value="city"/>
+          <PortType value="0"/>
+        </InPort>
+        <OutPort>
+          <UUID value="1c0147e3-b251-44c2-bbbe-ebcafb1f2035"/>
+          <PortName value="city"/>
+          <PortType value="0"/>
+        </OutPort>
+      </Link>
+      <Link>
+        <BackLink value="0"/>
+        <InPort>
+          <UUID value="f8cedf9b-9ec6-46ec-b776-55e314294064"/>
+          <PortName value="city"/>
+          <PortType value="0"/>
+        </InPort>
+        <OutPort>
+          <UUID value="cfbd98ef-68d5-4f32-ac9f-9e1544daa520"/>
+          <PortName value="city"/>
+          <PortType value="0"/>
+        </OutPort>
+      </Link>
+      <Link>
+        <BackLink value="0"/>
+        <InPort>
+          <UUID value="04176d95-53e6-4122-a228-fc349200078e"/>
+          <PortName value="city"/>
+          <PortType value="0"/>
+        </InPort>
+        <OutPort>
+          <UUID value="f8cedf9b-9ec6-46ec-b776-55e314294064"/>
+          <PortName value="city"/>
+          <PortType value="0"/>
+        </OutPort>
+      </Link>
+      <Link>
+        <BackLink value="0"/>
+        <InPort>
+          <UUID value="e6b3b3db-b642-4113-9023-05b319ef8019"/>
+          <PortName value="city"/>
+          <PortType value="0"/>
+        </InPort>
+        <OutPort>
+          <UUID value="04176d95-53e6-4122-a228-fc349200078e"/>
+          <PortName value="city"/>
+          <PortType value="0"/>
+        </OutPort>
+      </Link>
+      <Link>
+        <BackLink value="0"/>
+        <InPort>
+          <UUID value="b7a3a50e-4403-4d6b-b106-148566322cf0"/>
+          <PortName value="city"/>
+          <PortType value="0"/>
+        </InPort>
+        <OutPort>
+          <UUID value="e6b3b3db-b642-4113-9023-05b319ef8019"/>
+          <PortName value="city"/>
+          <PortType value="0"/>
+        </OutPort>
+      </Link>
+      <Link>
+        <BackLink value="0"/>
+        <InPort>
+          <UUID value="f5a50b02-653f-41ac-abc8-1ac46be27b57"/>
+          <PortName value="city"/>
+          <PortType value="0"/>
+        </InPort>
+        <OutPort>
+          <UUID value="b7a3a50e-4403-4d6b-b106-148566322cf0"/>
+          <PortName value="city"/>
+          <PortType value="0"/>
+        </OutPort>
+      </Link>
+      <Link>
+        <BackLink value="0"/>
+        <InPort>
+          <UUID value="d74ddd7c-d04d-439f-a432-f1225362c877"/>
+          <PortName value="city"/>
+          <PortType value="0"/>
+        </InPort>
+        <OutPort>
+          <UUID value="f5a50b02-653f-41ac-abc8-1ac46be27b57"/>
+          <PortName value="city"/>
+          <PortType value="0"/>
+        </OutPort>
+      </Link>
+      <Link>
+        <BackLink value="0"/>
+        <InPort>
+          <UUID value="3ceed070-0ef9-4237-a7e3-4a2ef668dbfe"/>
+          <PortName value="city"/>
+          <PortType value="0"/>
+        </InPort>
+        <OutPort>
+          <UUID value="d74ddd7c-d04d-439f-a432-f1225362c877"/>
+          <PortName value="city"/>
+          <PortType value="0"/>
+        </OutPort>
+      </Link>
+      <Link>
+        <BackLink value="0"/>
+        <InPort>
+          <UUID value="8ce79c2a-2f4d-429d-bca5-46e81299e8b3"/>
+          <PortName value="city"/>
+          <PortType value="0"/>
+        </InPort>
+        <OutPort>
+          <UUID value="3ceed070-0ef9-4237-a7e3-4a2ef668dbfe"/>
+          <PortName value="city"/>
+          <PortType value="0"/>
+        </OutPort>
+      </Link>
+      <Link>
+        <BackLink value="0"/>
+        <InPort>
+          <UUID value="b0726973-6208-4f27-8105-96a32d770a4f"/>
+          <PortName value="city"/>
+          <PortType value="0"/>
+        </InPort>
+        <OutPort>
+          <UUID value="8ce79c2a-2f4d-429d-bca5-46e81299e8b3"/>
+          <PortName value="city"/>
+          <PortType value="0"/>
+        </OutPort>
+      </Link>
+      <Link>
+        <BackLink value="0"/>
+        <InPort>
+          <UUID value="432cfd20-98ab-4f80-92da-08d7ee78525b"/>
+          <PortName value="city"/>
+          <PortType value="0"/>
+        </InPort>
+        <OutPort>
+          <UUID value="b0726973-6208-4f27-8105-96a32d770a4f"/>
+          <PortName value="city"/>
+          <PortType value="0"/>
+        </OutPort>
+      </Link>
+      <Link>
+        <BackLink value="0"/>
+        <InPort>
+          <UUID value="8989a8c4-518a-41db-b539-4a5574533718"/>
+          <PortName value="city"/>
+          <PortType value="0"/>
+        </InPort>
+        <OutPort>
+          <UUID value="432cfd20-98ab-4f80-92da-08d7ee78525b"/>
+          <PortName value="city"/>
+          <PortType value="0"/>
+        </OutPort>
+      </Link>
+      <Link>
+        <BackLink value="0"/>
+        <InPort>
+          <UUID value="44817eb1-5003-4ac1-9b86-3dfe38635071"/>
+          <PortName value="city"/>
+          <PortType value="0"/>
+        </InPort>
+        <OutPort>
+          <UUID value="8989a8c4-518a-41db-b539-4a5574533718"/>
+          <PortName value="city"/>
+          <PortType value="0"/>
+        </OutPort>
+      </Link>
+      <Link>
+        <BackLink value="0"/>
+        <InPort>
+          <UUID value="0c59d377-fde5-4b14-b102-eccd65334121"/>
+          <PortName value="city"/>
+          <PortType value="0"/>
+        </InPort>
+        <OutPort>
+          <UUID value="44817eb1-5003-4ac1-9b86-3dfe38635071"/>
+          <PortName value="city"/>
+          <PortType value="0"/>
+        </OutPort>
+      </Link>
+    </Links>
+  </DynaMindCore>
+  <DynaMindGUI>
+    <GUI_Nodes>
+      <GUI_Node>
+        <GUI_UUID value="1c0147e3-b251-44c2-bbbe-ebcafb1f2035"/>
+        <GUI_PosX value="0"/>
+        <GUI_PosY value="0"/>
+        <GUI_Mini value="0"/>
+      </GUI_Node>
+      <GUI_Node>
+        <GUI_UUID value="048be11f-fa17-4cad-8fa2-b3198a3998e8"/>
+        <GUI_PosX value="0"/>
+        <GUI_PosY value="0"/>
+        <GUI_Mini value="0"/>
+      </GUI_Node>
+      <GUI_Node>
+        <GUI_UUID value="cfbd98ef-68d5-4f32-ac9f-9e1544daa520"/>
+        <GUI_PosX value="300"/>
+        <GUI_PosY value="0"/>
+        <GUI_Mini value="0"/>
+      </GUI_Node>
+      <GUI_Node>
+        <GUI_UUID value="f8cedf9b-9ec6-46ec-b776-55e314294064"/>
+        <GUI_PosX value="600"/>
+        <GUI_PosY value="0"/>
+        <GUI_Mini value="0"/>
+      </GUI_Node>
+      <GUI_Node>
+        <GUI_UUID value="04176d95-53e6-4122-a228-fc349200078e"/>
+        <GUI_PosX value="900"/>
+        <GUI_PosY value="0"/>
+        <GUI_Mini value="0"/>
+      </GUI_Node>
+      <GUI_Node>
+        <GUI_UUID value="e6b3b3db-b642-4113-9023-05b319ef8019"/>
+        <GUI_PosX value="1200"/>
+        <GUI_PosY value="0"/>
+        <GUI_Mini value="0"/>
+      </GUI_Node>
+      <GUI_Node>
+        <GUI_UUID value="b7a3a50e-4403-4d6b-b106-148566322cf0"/>
+        <GUI_PosX value="1500"/>
+        <GUI_PosY value="0"/>
+        <GUI_Mini value="0"/>
+      </GUI_Node>
+      <GUI_Node>
+        <GUI_UUID value="f5a50b02-653f-41ac-abc8-1ac46be27b57"/>
+        <GUI_PosX value="1800"/>
+        <GUI_PosY value="0"/>
+        <GUI_Mini value="0"/>
+      </GUI_Node>
+      <GUI_Node>
+        <GUI_UUID value="d74ddd7c-d04d-439f-a432-f1225362c877"/>
+        <GUI_PosX value="2100"/>
+        <GUI_PosY value="0"/>
+        <GUI_Mini value="0"/>
+      </GUI_Node>
+      <GUI_Node>
+        <GUI_UUID value="3ceed070-0ef9-4237-a7e3-4a2ef668dbfe"/>
+        <GUI_PosX value="2400"/>
+        <GUI_PosY value="0"/>
+        <GUI_Mini value="0"/>
+      </GUI_Node>
+      <GUI_Node>
+        <GUI_UUID value="8ce79c2a-2f4d-429d-bca5-46e81299e8b3"/>
+        <GUI_PosX value="2700"/>
+        <GUI_PosY value="0"/>
+        <GUI_Mini value="0"/>
+      </GUI_Node>
+      <GUI_Node>
+        <GUI_UUID value="b0726973-6208-4f27-8105-96a32d770a4f"/>
+        <GUI_PosX value="3000"/>
+        <GUI_PosY value="0"/>
+        <GUI_Mini value="0"/>
+      </GUI_Node>
+      <GUI_Node>
+        <GUI_UUID value="432cfd20-98ab-4f80-92da-08d7ee78525b"/>
+        <GUI_PosX value="3300"/>
+        <GUI_PosY value="0"/>
+        <GUI_Mini value="0"/>
+      </GUI_Node>
+      <GUI_Node>
+        <GUI_UUID value="8989a8c4-518a-41db-b539-4a5574533718"/>
+        <GUI_PosX value="3600"/>
+        <GUI_PosY value="0"/>
+        <GUI_Mini value="0"/>
+      </GUI_Node>
+      <GUI_Node>
+        <GUI_UUID value="44817eb1-5003-4ac1-9b86-3dfe38635071"/>
+        <GUI_PosX value="3900"/>
+        <GUI_PosY value="0"/>
+        <GUI_Mini value="0"/>
+      </GUI_Node>
+      <GUI_Node>
+        <GUI_UUID value="0c59d377-fde5-4b14-b102-eccd65334121"/>
+        <GUI_PosX value="4200"/>
+        <GUI_PosY value="0"/>
+        <GUI_Mini value="0"/>
+      </GUI_Node>
+    </GUI_Nodes>
+  </DynaMindGUI>
+</DynaMind>

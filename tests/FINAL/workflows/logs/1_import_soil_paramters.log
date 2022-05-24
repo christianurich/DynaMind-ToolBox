@@ -1,0 +1,94 @@
+INFO	 Thu May 12 08:34:11 2022| Pythonthreads enabled
+INFO	 Thu May 12 08:34:11 2022| Add Python Path  
+INFO	 Thu May 12 08:34:11 2022| Load modules from:  /workspaces/DynaMind-ToolBox/build/output/PythonModules/scripts
+INFO	 Thu May 12 08:34:11 2022| Add Python Path  /workspaces/DynaMind-ToolBox/build/output/PythonModules/scripts
+INFO	 Thu May 12 08:34:11 2022| Add Python Path  /workspaces/DynaMind-ToolBox/build/output/PythonModules/scripts/DMPerformance
+INFO	 Thu May 12 08:34:11 2022| Register  DMPerformance
+INFO	 Thu May 12 08:34:13 2022| Add Python Path  /workspaces/DynaMind-ToolBox/build/output/PythonModules/scripts
+INFO	 Thu May 12 08:34:13 2022| Add Python Path  /workspaces/DynaMind-ToolBox/build/output/PythonModules/scripts/Drainage
+INFO	 Thu May 12 08:34:13 2022| Register  Drainage
+INFO	 Thu May 12 08:34:14 2022| Add Python Path  /workspaces/DynaMind-ToolBox/build/output/PythonModules/scripts
+INFO	 Thu May 12 08:34:14 2022| Add Python Path  /workspaces/DynaMind-ToolBox/build/output/PythonModules/scripts/GDALModules
+INFO	 Thu May 12 08:34:14 2022| Register  GDALModules
+INFO	 Thu May 12 08:34:14 2022| Add Python Path  /workspaces/DynaMind-ToolBox/build/output/PythonModules/scripts
+INFO	 Thu May 12 08:34:14 2022| Add Python Path  /workspaces/DynaMind-ToolBox/build/output/PythonModules/scripts/GDALWebModules
+INFO	 Thu May 12 08:34:14 2022| Register  GDALWebModules
+INFO	 Thu May 12 08:34:15 2022| Add Python Path  /workspaces/DynaMind-ToolBox/build/output/PythonModules/scripts
+INFO	 Thu May 12 08:34:15 2022| Add Python Path  /workspaces/DynaMind-ToolBox/build/output/PythonModules/scripts/TestModules
+INFO	 Thu May 12 08:34:15 2022| Register  TestModules
+INFO	 Thu May 12 08:34:16 2022| Load modules from:  /workspaces/DynaMind-ToolBox/build/output/Modules
+INFO	 Thu May 12 08:34:16 2022| successfully loaded native module  /workspaces/DynaMind-ToolBox/build/output/Modules/libdynamind-performance-assessment.so
+INFO	 Thu May 12 08:34:16 2022| successfully loaded native module  /workspaces/DynaMind-ToolBox/build/output/Modules/libgdal_drainage_modules.so
+INFO	 Thu May 12 08:34:17 2022| successfully loaded native module  /workspaces/DynaMind-ToolBox/build/output/Modules/libgdal_standard_modules.so
+INFO	 Thu May 12 08:34:17 2022| Add Python Path  
+INFO	 Thu May 12 08:34:17 2022| successfully loaded native module  /workspaces/DynaMind-ToolBox/build/output/libdynamind-testmodules.so
+INFO	 Thu May 12 08:34:17 2022| Add Python Path  /workspaces/DynaMind-ToolBox/build/output
+INFO	 Thu May 12 08:34:17 2022| Add Python Path  /workspaces/DynaMind-ToolBox/build/output/pycd3
+INFO	 Thu May 12 08:34:17 2022| Register  pycd3
+INFO	 Thu May 12 08:34:17 2022| Add Python Path  /workspaces/DynaMind-ToolBox/build/output
+INFO	 Thu May 12 08:34:17 2022| Add Python Path  /workspaces/DynaMind-ToolBox/build/output/pydmextensions
+INFO	 Thu May 12 08:34:17 2022| Register  pydmextensions
+INFO	 Thu May 12 08:34:18 2022| Add Python Path  /workspaces/DynaMind-ToolBox/build/output
+INFO	 Thu May 12 08:34:18 2022| Add Python Path  /workspaces/DynaMind-ToolBox/build/output/pydmtoolbox
+INFO	 Thu May 12 08:34:18 2022| Register  pydmtoolbox
+INFO	 Thu May 12 08:34:18 2022| Add Python Path  /workspaces/DynaMind-ToolBox/build/output
+INFO	 Thu May 12 08:34:18 2022| Add Python Path  /workspaces/DynaMind-ToolBox/build/output/pydynamind
+INFO	 Thu May 12 08:34:18 2022| Register  pydynamind
+INFO	 Thu May 12 08:34:18 2022| Add Python Path  /workspaces/DynaMind-ToolBox/build/output
+INFO	 Thu May 12 08:34:18 2022| Add Python Path  /workspaces/DynaMind-ToolBox/build/output/start
+INFO	 Thu May 12 08:34:18 2022| Register  start
+INFO	 Thu May 12 08:34:18 2022| >> loading simulation file ' /workspaces/DynaMind-ToolBox/tests/FINAL/workflows/compiled/1_import_soil_paramters.xml '
+INFO	 Thu May 12 08:34:18 2022| converted relative path ' /workspaces/DynaMind-ToolBox/tests/FINAL/databases/base.sqlite '
+INFO	 Thu May 12 08:34:18 2022| to absolute path ' /workspaces/DynaMind-ToolBox/tests/FINAL/databases/base.sqlite '
+INFO	 Thu May 12 08:34:18 2022| converted relative path ' /workspaces/DynaMind-ToolBox/tests/FINAL/databases/1_soil '
+INFO	 Thu May 12 08:34:18 2022| to absolute path ' /workspaces/DynaMind-ToolBox/tests/FINAL/databases/1_soil '
+INFO	 Thu May 12 08:34:18 2022| >> checking stream
+INFO	 Thu May 12 08:34:18 2022| >> Check Streams
+INFO	 Thu May 12 08:34:19 2022| >> checking stream finished successfully
+INFO	 Thu May 12 08:34:19 2022| >> loading simulation file finished
+INFO	 Thu May 12 08:34:19 2022| >>>> starting simulation
+INFO	 Thu May 12 08:34:19 2022| >> Reset Simulation
+INFO	 Thu May 12 08:34:19 2022| >> Check Streams
+INFO	 Thu May 12 08:34:19 2022| >> checking simulation
+INFO	 Thu May 12 08:34:19 2022| >> Check Streams
+INFO	 Thu May 12 08:34:19 2022| >> checking simulation succeeded (took  23 ms)
+INFO	 Thu May 12 08:34:19 2022| >> starting simulation
+INFO	 Thu May 12 08:34:19 2022| running module ' GDALHotStarter   load_simulation '
+INFO	 Thu May 12 08:34:54 2022| module ' load_simulation ' executed successfully (took  35322 ms)
+INFO	 Thu May 12 08:34:54 2022| running group ' add_soil '
+INFO	 Thu May 12 08:34:54 2022| condition fulfilled for group ' add_soil '
+INFO	 Thu May 12 08:34:54 2022| running module ' DM_CreateComponent   add_container '
+INFO	 Thu May 12 08:34:55 2022| module ' add_container ' executed successfully (took  392 ms)
+INFO	 Thu May 12 08:34:55 2022| running group ' add_soil '
+INFO	 Thu May 12 08:34:55 2022| finishing group ' add_soil '
+INFO	 Thu May 12 08:34:55 2022| running module ' GDALAttributeCalculator   Add_Parameter_horton_inital_infiltration '
+INFO	 Thu May 12 08:34:55 2022| module ' Add_Parameter_horton_inital_infiltration ' executed successfully (took  133 ms)
+INFO	 Thu May 12 08:34:55 2022| running module ' GDALAttributeCalculator   Add_Parameter_horton_final_infiltration '
+INFO	 Thu May 12 08:34:55 2022| module ' Add_Parameter_horton_final_infiltration ' executed successfully (took  48 ms)
+INFO	 Thu May 12 08:34:55 2022| running module ' GDALAttributeCalculator   Add_Parameter_horton_decay_constant '
+INFO	 Thu May 12 08:34:55 2022| module ' Add_Parameter_horton_decay_constant ' executed successfully (took  107 ms)
+INFO	 Thu May 12 08:34:55 2022| running module ' GDALAttributeCalculator   Add_Parameter_wilting_point '
+INFO	 Thu May 12 08:34:55 2022| module ' Add_Parameter_wilting_point ' executed successfully (took  145 ms)
+INFO	 Thu May 12 08:34:55 2022| running module ' GDALAttributeCalculator   Add_Parameter_field_capactiy '
+INFO	 Thu May 12 08:34:55 2022| module ' Add_Parameter_field_capactiy ' executed successfully (took  40 ms)
+INFO	 Thu May 12 08:34:55 2022| running module ' GDALAttributeCalculator   Add_Parameter_saturation '
+INFO	 Thu May 12 08:34:55 2022| module ' Add_Parameter_saturation ' executed successfully (took  42 ms)
+INFO	 Thu May 12 08:34:55 2022| running module ' GDALAttributeCalculator   Add_Parameter_soil_depth '
+INFO	 Thu May 12 08:34:55 2022| module ' Add_Parameter_soil_depth ' executed successfully (took  82 ms)
+INFO	 Thu May 12 08:34:55 2022| running module ' GDALAttributeCalculator   Add_Parameter_intial_soil_depth '
+INFO	 Thu May 12 08:34:55 2022| module ' Add_Parameter_intial_soil_depth ' executed successfully (took  101 ms)
+INFO	 Thu May 12 08:34:55 2022| running module ' GDALAttributeCalculator   Add_Parameter_ground_water_recharge_rate '
+INFO	 Thu May 12 08:34:55 2022| module ' Add_Parameter_ground_water_recharge_rate ' executed successfully (took  42 ms)
+INFO	 Thu May 12 08:34:55 2022| running module ' GDALAttributeCalculator   Add_Parameter_transpiration_capacity '
+INFO	 Thu May 12 08:34:56 2022| module ' Add_Parameter_transpiration_capacity ' executed successfully (took  63 ms)
+INFO	 Thu May 12 08:34:56 2022| running module ' GDALAttributeCalculator   Add_Parameter_initial_loss '
+INFO	 Thu May 12 08:34:56 2022| module ' Add_Parameter_initial_loss ' executed successfully (took  52 ms)
+INFO	 Thu May 12 08:34:56 2022| running module ' DM_MicroClimate   MicroClimateAssessment '
+INFO	 Thu May 12 08:34:56 2022| module ' MicroClimateAssessment ' executed successfully (took  14 ms)
+INFO	 Thu May 12 08:34:56 2022| running module ' DM_ExportSimulationDB   export_database '
+INFO	 Thu May 12 08:34:56 2022| Copy file to  /workspaces/DynaMind-ToolBox/tests/FINAL/databases/1_soil.sqlite
+INFO	 Thu May 12 08:34:56 2022| module ' export_database ' executed successfully (took  114 ms)
+INFO	 Thu May 12 08:34:56 2022| >> finished simulation (took  36753 ms)
+INFO	 Thu May 12 08:34:56 2022| >>>> finished simulation at an average of  36777 +- 0 ms
+INFO	 Thu May 12 08:34:56 2022| >> Reset Simulation
+INFO	 Thu May 12 08:34:56 2022| >> Check Streams

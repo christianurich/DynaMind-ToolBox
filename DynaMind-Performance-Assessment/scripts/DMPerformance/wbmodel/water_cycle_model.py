@@ -65,7 +65,6 @@ class WaterCycleModel():
         self._cd3.register_native_plugin(
             self.get_default_folder() + "/CD3Modules/libdance4water-nodes")
 
-
         self._networks = {}
 
         sub_networks = {}
@@ -78,13 +77,13 @@ class WaterCycleModel():
             sub_networks["sub_" + str(sub_id)] = self._create_sub_catchment_network(sub_id, stream,  "sub_" + str(sub_id) + "_" + str(stream) + "_total")
 
         self._networks = sub_networks
-
+        
         # Needs unique ID
         self._build_network()
         self._cd3.init_nodes()
         self._cd3.start(self.start_date)
-        #self._reporting()
-
+        #self._reporting(timeseries = True)
+        #print('FLOW PROBES', self._flow_probes)
         # for key, storage in self._lot_storage_reporting.items():
         #     for id, s in storage.items():
         #         print(key, id, s,  sum(s.get_state_value_as_double_vector('provided_volume')))
@@ -160,7 +159,6 @@ class WaterCycleModel():
         }
 
     def _build_network(self):
-
         # Create lots
         for lot_id, lot in self._lots.items():
             self._nodes[lot_id] = Lot(lot_id,
@@ -174,10 +172,13 @@ class WaterCycleModel():
         for name, network in self._networks.items():
             self._create_nodes(network)
 
+        #print('NODES',self._nodes)
+
         # Add all storages
         for name, s in self._wb_sub_storages.items():
             self._create_storage(s)
-
+            
+        self._cd3.init_nodes()
         for name, network in self._networks.items():
             self._create_network(name, network)
 
@@ -194,12 +195,14 @@ class WaterCycleModel():
 
     def _create_nodes(self, network):
         nodes = {}
+        # determine the number of inputs for the mixer
         for e in network["edges"]:
             end_n = e[1]
             if end_n not in nodes:
                 nodes[end_n] = 0
             nodes[end_n] += 1
 
+        
         for n in nodes.keys():
             if n not in self._nodes:
                 self._nodes[n] = TransferNode(self._cd3, nodes[n])
@@ -222,6 +225,7 @@ class WaterCycleModel():
                 continue
             #Careful only call once because it increments the ports
             inflow = n_end.in_port
+
             self._cd3.add_connection(outflow[0], outflow[1], inflow[0], inflow[1])
 
         self._flow_probes[name] = self._nodes[network["reporting_node"]].add_flow_probe()

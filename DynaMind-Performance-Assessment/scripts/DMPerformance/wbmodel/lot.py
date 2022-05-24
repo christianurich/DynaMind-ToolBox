@@ -112,6 +112,13 @@ class Lot:
 
         pervious_area = lot["area"] - lot["roof_area"] - lot["impervious_area"]
 
+        print("Lot area: ", lot["area"])
+        print("Roof area: ", lot["roof_area"])
+        print("Impervious area: ", lot["impervious_area"])
+        print("Pervious area: ", pervious_area)
+        print("Garden area:",lot['irrigated_garden_area'])
+
+
         # Green roofs
         if (self._green_roofs):
             roof_evapotranspiration = np.array(self._green_roofs[UnitFlows.pervious_evapotranspiration]) * (
@@ -135,7 +142,6 @@ class Lot:
 
         self._internal_streams[LotStream.rainfall] = self._create_stream(self._standard_values[UnitFlows.rainfall],
                                                                          lot["area"])
-
         self._internal_streams[LotStream.pervious_runoff] = self._create_stream(
             self._standard_values[UnitFlows.pervious_runoff], pervious_area)
         self._internal_streams[LotStream.impervious_runoff] = self._create_stream(
@@ -236,6 +242,7 @@ class Lot:
     def _sum_streams(self, streams: []) -> list:
         mixer = self._cd3.add_node("Mixer")
         mixer.setIntParameter("num_inputs", len(streams))
+        self._cd3.init_nodes()
         for idx, s in enumerate(streams):
             s: list
             self._cd3.add_connection(s[0], s[1], mixer, f"in_{idx}")
