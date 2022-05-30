@@ -6,7 +6,7 @@ import pydynamind as dm
 import gdal, osr
 import json
 
-class ImportParkFileDev(dm.Module):
+class ImportParkFile(dm.Module):
     display_name = "Import Park File"
     group_name = "Performance Assessment"
 
