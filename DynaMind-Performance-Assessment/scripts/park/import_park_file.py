@@ -6,7 +6,7 @@ import pydynamind as dm
 import gdal, osr
 import json
 
-class ImportParkFile(dm.Module):
+class ImportParkFileDev(dm.Module):
     display_name = "Import Park File"
     group_name = "Performance Assessment"
 
@@ -26,7 +26,7 @@ class ImportParkFile(dm.Module):
         self.zones = dm.ViewContainer("zone", dm.COMPONENT, dm.WRITE)
         self.zones.addAttribute("name", dm.Attribute.STRING, dm.WRITE)
         self.zones.addAttribute("wb_soil_id", dm.Attribute.STRING, dm.WRITE)
-
+        self.zones.addAttribute("guid", dm.Attribute.STRING, dm.WRITE)
         
         # set up the lot view. Nothing gets written to the lot here, but just setting the structure
         self.lot = dm.ViewContainer('wb_lot', dm.COMPONENT, dm.WRITE)
@@ -96,6 +96,7 @@ class ImportParkFile(dm.Module):
             zone = self.zones.create_feature()
             zone.SetField("name", z["name"])
             zone.SetField("wb_soil_id",idx+1)
+            zone.SetField("guid",z['guid'])
 
 
             soil = self.soil.create_feature()
