@@ -101,12 +101,15 @@ class WaterCycleModel():
             return {}
         return self._lot_storage_reporting[parcel_id]
 
-    def get_parcel_internal_stream_volumes(self, parcel_id: int, lot_stream_id: LotStream):
+    def get_parcel_internal_stream_volumes(self, parcel_id: int, lot_stream_id: LotStream, annual: bool):
         lot: Lot
         if parcel_id not in self._nodes:
             return None
         lot = self._nodes[parcel_id]
-        return annual_sum(lot.get_internal_stream_report(lot_stream_id).get_state_value_as_double_vector('Flow'))
+        if annual == True:
+            return annual_sum(lot.get_internal_stream_report(lot_stream_id).get_state_value_as_double_vector('Flow'))
+        else:
+            return lot.get_internal_stream_report(lot_stream_id).get_state_value_as_double_vector('Flow')
 
     def get_internal_storage_volumes(self, storage_id):
         total_provided = 0
@@ -168,11 +171,10 @@ class WaterCycleModel():
                                       self._wb_demand_profile[lot["wb_demand_profile_id"]],
                                       self._lot_storage_reporting)
 
+        
         # Create all nodes in network
         for name, network in self._networks.items():
             self._create_nodes(network)
-
-        #print('NODES',self._nodes)
 
         # Add all storages
         for name, s in self._wb_sub_storages.items():
@@ -232,5 +234,4 @@ class WaterCycleModel():
 
     def get_default_folder(self):
         return self._library_path
-
 
