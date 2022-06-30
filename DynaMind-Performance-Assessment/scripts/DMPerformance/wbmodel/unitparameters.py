@@ -282,13 +282,13 @@ class UnitParameters:
             #for testing to get the full unscaled values
             #self._standard_values[key] = [v for v in probe.get_state_value_as_double_vector('Flow')]
 
-        self._standard_values[UnitFlows.rainfall] = [v for v in self._climate_data["rainfall intensity"][:-1]]
+        self._standard_values[UnitFlows.rainfall] = [v for v in self._climate_data["rainfall intensity"]]
         
 
         if soil_param[0] == SoilParameters.impervious_threshold:
             self._standard_values[UnitFlows.evapotranspiration] = [v for v in self._climate_data["evapotranspiration"]]
         elif soil_param[0] == SoilParameters_Irrigation.horton_inital_infiltration:
-            self._standard_values[UnitFlows.evapotranspiration] = [v for v in self._climate_data["potential pt data"][:-1]]
+            self._standard_values[UnitFlows.evapotranspiration] = [v for v in self._climate_data["potential pt data"]]
 
         pervious_evapotranspiration_irrigated = []
         impervious_evapotranspiration = []
