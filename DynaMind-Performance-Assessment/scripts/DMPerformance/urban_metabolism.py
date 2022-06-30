@@ -447,14 +447,10 @@ class UrbanMetabolismModel(Module):
         for station_id, station in stations.items():
             if "potential pt data" in station:
                 vec =  station["potential pt data"]
-                # remove first two elements
-                vec = vec[2:]
                 station["potential pt data"] = vec
 
             if "irrigation" in station:
                 vec = station["irrigation"]
-                # remove first two elements
-                vec = vec[2:]
                 station["irrigation"] = vec
 
         # @TODO make sure data streams are the same length
