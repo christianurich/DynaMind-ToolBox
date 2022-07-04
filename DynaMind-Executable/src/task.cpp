@@ -301,6 +301,7 @@ void Task::run()
             ("default-module-path", po::value<string>(), "set the default module path")
             //("python-modules", po::value<vector <string> >(), "set path to python modules")
             ("parameter", po::value<string>(), "overwrites a parameter: ([modulename].[parametername]=[value];")
+            ("parameter-file", po::value<string>(), "overwrites a parameter: ([modulename].[parametername]=[value]; found in file")
             ("parameterlist", "shows the available parameters for this file")
             ("with-status-updates", "print custom status updates")
             ("version", "shows the current version of the dynamind core")
@@ -395,11 +396,23 @@ void Task::run()
         if (vm.count("replace"))     replace = vm["replace"].as<string>();
 
         if (vm.count("parameter"))     parameteroverloads = vm["parameter"].as<string>();
-
+        
         if (vm.count("loglevel"))		ll = (DM::LogLevel)vm["loglevel"].as<int>();
 
         if (vm.count("logpath"))		lf = vm["logpath"].as<string>();
 
+        if (vm.count("parameter-file")) {
+            QString filename = QString::fromStdString(vm["parameter-file"].as<string>());
+            if(!QFile::exists(filename)) {
+                    std::cout << "parameter file" << filename.toStdString() << " does not exist" << std::endl;
+            } else {
+                QFile f(filename);
+                f.open(QFile::ReadOnly | QFile::Text);
+                QTextStream in(&f);
+                parameteroverloads = in.readAll().toStdString();
+                f.close();
+            }
+        }
 
         QDateTime time = QDateTime::currentDateTime();
         QString logfilepath = QDir::tempPath() + "/dynamind" + time.toString("_yyMMdd_hhmmss_zzz")+".log";

@@ -13,7 +13,7 @@
 		<Node>
 			<ClassName value="DM_CreateComponent"/>
 			<UUID value="1629579648"/>
-			<Name value=""/>
+			<Name value="component"/>
 			<GroupUUID value="0"/>
 			<DebugMode value="0"/>
 			<parameter name="lead_view_name">
