@@ -51,6 +51,7 @@ class UnitFlows(Enum):
     pervious_evapotranspiration_irrigated = 13
     impervious_evapotranspiration = 14
     roof_evapotranspiration = 15
+    soil_moisture = 16
 
 
 class UnitParameters:
@@ -96,7 +97,7 @@ class UnitParameters:
 
         lot_area = 500
         perv_area_fra = 0.2
-        roof_imp_fra = 0
+        roof_imp_fra = 0.5
 
 
         # get the keys of the soil parameters of the model. These will be different depending on what model is being used and thus can be
@@ -187,6 +188,7 @@ class UnitParameters:
             reporting[UnitFlows.pervious_evapotranspiration_irrigated] = {"port": "pervious_evapotranspiration", "factor": (lot_area * (perv_area_fra))}
             reporting[UnitFlows.impervious_evapotranspiration] = {"port": "impervious_evapotranspiration", "factor": (lot_area * (1 - perv_area_fra - roof_imp_fra))}
             reporting['Perv_Rainstorage'] = {"port": "Perv_Rainstorage", "factor": (lot_area * (perv_area_fra))}
+            reporting[UnitFlows.soil_moisture] = {"port": "soil_moisture", "factor": 1}
 
         #set up the city model and register the python plugins
 
@@ -280,13 +282,13 @@ class UnitParameters:
             #for testing to get the full unscaled values
             #self._standard_values[key] = [v for v in probe.get_state_value_as_double_vector('Flow')]
 
-        self._standard_values[UnitFlows.rainfall] = [v for v in self._climate_data["rainfall intensity"][:-1]]
+        self._standard_values[UnitFlows.rainfall] = [v for v in self._climate_data["rainfall intensity"]]
         
 
         if soil_param[0] == SoilParameters.impervious_threshold:
             self._standard_values[UnitFlows.evapotranspiration] = [v for v in self._climate_data["evapotranspiration"]]
         elif soil_param[0] == SoilParameters_Irrigation.horton_inital_infiltration:
-            self._standard_values[UnitFlows.evapotranspiration] = [v for v in self._climate_data["potential pt data"][:-1]]
+            self._standard_values[UnitFlows.evapotranspiration] = [v for v in self._climate_data["potential pt data"]]
 
         pervious_evapotranspiration_irrigated = []
         impervious_evapotranspiration = []

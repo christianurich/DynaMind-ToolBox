@@ -51,6 +51,10 @@ class UrbanMetabolismModel(Module):
         for s in LotStream:
             self.lot.addAttribute(str(s).split(".")[1], DM.Attribute.DOUBLE, DM.WRITE)
 
+        if self.irrigation_module == 1:
+            for s in LotStream:
+                self.lot.addAttribute(f'{str(s).split(".")[1]}_daily', DM.Attribute.DOUBLEVECTOR, DM.WRITE)
+
         self.wb_lot_storages=ViewContainer("wb_lot_storages", DM.COMPONENT, DM.WRITE)
         self.wb_lot_storages.addAttribute('provided_volume', DM.Attribute.DOUBLEVECTOR, DM.WRITE)
         self.wb_lot_storages.addAttribute('storage_behaviour', DM.Attribute.DOUBLEVECTOR, DM.WRITE)
@@ -311,6 +315,8 @@ class UrbanMetabolismModel(Module):
                              dates=dates,
                              library_path=self.getSimulationConfig().getDefaultLibraryPath())
 
+        
+
         self.wb_soil_parameters.finalise()
 
         self.wb_sub_catchments.reset_reading()
@@ -393,7 +399,10 @@ class UrbanMetabolismModel(Module):
                 logging.debug(
                     f"{s.GetFID()} dry: {format(storage.get_state_value_as_int('dry'), '.2f')}")
             for stream in LotStream:
-                l.SetField(str(stream).split(".")[1], float(wb.get_parcel_internal_stream_volumes(l.GetFID(), stream)))
+                l.SetField(str(stream).split(".")[1], float(wb.get_parcel_internal_stream_volumes(l.GetFID(), stream, annual = True)))
+                if self.irrigation_module == 1:
+                    dm_set_double_list(l,f'{str(stream).split(".")[1]}_daily', wb.get_parcel_internal_stream_volumes(l.GetFID(), stream,annual = False))
+                    # l.SetField(f'{str(s).split(".")[1]}_daily', float(wb.get_parcel_internal_stream_volumes(l.GetFID(), stream,annual = False)))
         self.lot.finalise()
         self.wb_lot_storages.finalise()
 
@@ -438,14 +447,10 @@ class UrbanMetabolismModel(Module):
         for station_id, station in stations.items():
             if "potential pt data" in station:
                 vec =  station["potential pt data"]
-                # remove first two elements
-                vec = vec[2:]
                 station["potential pt data"] = vec
 
             if "irrigation" in station:
                 vec = station["irrigation"]
-                # remove first two elements
-                vec = vec[2:]
                 station["irrigation"] = vec
 
         # @TODO make sure data streams are the same length
@@ -506,5 +511,4 @@ if __name__ == '__main__':
             lots[i] = (_create_lot(i))
         WaterCycleModel(lots=lots, library_path="/Users/christianurich/Documents/dynamind/build/output/")
         print(s, time.time() - start)
-
 
