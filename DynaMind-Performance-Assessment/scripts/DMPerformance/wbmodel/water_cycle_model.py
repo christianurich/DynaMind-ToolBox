@@ -32,9 +32,20 @@ class WaterCycleModel():
 
         print(self.start_date, self.end_date)
 
+
+        # Check which combinations exists
+        lot_combinations = set()
+        for lot_id, lot in lots.items():
+            lot_combinations.add((lot["soil_id"], lot["station_id"], lot["wb_demand_profile_id"]))
+            if lot["green_roof"]:
+                lot_combinations.add((lot["green_roof"]["soil_id"], lot["station_id"], lot["wb_demand_profile_id"]))
+
+
         for station_id in self._stations.keys():
             for soil_id, parameters in soils.items():
                 for wb_demand_profile_id, wb_p in wb_demand_profile.items():
+                    if (soil_id, station_id, wb_demand_profile_id) not in lot_combinations:
+                        continue
                     logging.info(
                         f"station: {station_id} soil_id: {soil_id} wb_demand_profile_id: {wb_demand_profile_id}")
                     self._standard_values[(soil_id, station_id, wb_demand_profile_id)] = UnitParameters(self.start_date,
@@ -43,7 +54,6 @@ class WaterCycleModel():
                                                            self._stations[station_id],
                                                            wb_p[DemandProfile.crop_factor],
                                                            self._library_path).unit_values
-
 
         self._lots = lots
         self._lot_storage_reporting = {}
