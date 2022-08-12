@@ -60,14 +60,12 @@ INCLUDE_DIRECTORIES(src/core ${QT_QTCORE_INCLUDE_DIR})
 
 IF(PYTHON_EMBEDDING)
     FIND_PACKAGE(PythonLibs 3.5 REQUIRED)
-    FIND_PROGRAM(PYTHON_EXECUTABLE NAMES python)
+    FIND_PROGRAM(PYTHON_EXECUTABLE NAMES python3)
     INCLUDE_DIRECTORIES(src/python-swig ${PYTHON_INCLUDE_PATH})
     FIND_PACKAGE(SWIG REQUIRED)
     INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_PATH})
     execute_process(
-      COMMAND "${PYTHON_EXECUTABLE}" -c "if True:
-        from distutils import sysconfig as sc
-        print(sc.get_python_lib(prefix='', plat_specific=True))"
+      COMMAND "${PYTHON_EXECUTABLE}" -c "if True: from distutils import sysconfig as sc; print(sc.get_python_lib(prefix='', plat_specific=True))"
       OUTPUT_VARIABLE PYTHON_SITE_PACKAGES
       OUTPUT_STRIP_TRAILING_WHITESPACE)
   
