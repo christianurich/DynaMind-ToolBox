@@ -65,7 +65,7 @@ IF(PYTHON_EMBEDDING)
     FIND_PACKAGE(SWIG REQUIRED)
     INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_PATH})
     execute_process(
-      COMMAND "${PYTHON_EXECUTABLE}" -c "if True: from distutils import sysconfig as sc; print(sc.get_python_lib(prefix='', plat_specific=True))"
+      COMMAND "${PYTHON_EXECUTABLE}" -c "if True: import site; print(site.getsitepackages()[0].replace('/usr/', '').replace('local/', ''))"
       OUTPUT_VARIABLE PYTHON_SITE_PACKAGES
       OUTPUT_STRIP_TRAILING_WHITESPACE)
   
