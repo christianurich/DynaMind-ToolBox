@@ -87,7 +87,7 @@ if (WITH_PYTHON)
     INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_PATH})
 	message(${PYTHON_EXECUTABLE} " Python executable")
     execute_process(
-      COMMAND "${PYTHON_EXECUTABLE}" -c "if True: from distutils import sysconfig as sc; print(sc.get_python_lib(prefix='', plat_specific=True))"
+      COMMAND "${PYTHON_EXECUTABLE}" -c "if True: import site; print(site.getsitepackages()[0].replace('/usr/', '').replace('local/', ''))"
       OUTPUT_VARIABLE PYTHON_SITE_PACKAGES
       OUTPUT_STRIP_TRAILING_WHITESPACE)
 endif (WITH_PYTHON)
