@@ -21,7 +21,7 @@ OPTION(WITH_DOC "Create Docu" OFF)
 OPTION(PYTHON_EMBEDDING "Embedding Python" ON)
 OPTION(USEQT5 "Use Qt5" ON)
 OPTION(QGL_FROM_SOURCE "Build QGLViewer from source" OFF)
-
+set(CMAKE_BUILD_TYPE Release)
 
 set(QT_MAJOR_VERSION 4)
 if(USEQT5)
