@@ -1269,7 +1269,7 @@ bool Simulation::loadSimulation(QIODevice* source, QString filepath,
 	QDir simFileDir = QFileInfo(filepath).absoluteDir();	// for param corr.
 	Logger(Standard) << ">> loading simulation file '" << filepath << "'";
 
-	SimulationReader simreader(source);
+	SimulationReader simreader(source, this->getSimulationConfig());
 
 	this->setSimulationConfig(simreader.getSettings());
 

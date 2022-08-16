@@ -30,6 +30,7 @@ std::string modulePath() {
 SimulationConfig::SimulationConfig()
 {
 
+	std::cout << "Init sim config" << std::endl;
 	CoordinateSystem = 0;
 	workingDir = QString(QDir::tempPath()+"/dynamind").toStdString();
 	keepSystems = false;
@@ -101,6 +102,7 @@ std::string SimulationConfig::getSpatialiteModuleLocation()
 }
 
 void SimulationConfig::setSpatialiteModuleLocation(const std::string & spatialiteLocation) {
+	std::cout << "override me" << std::endl;
     this->spatialiteLocation = spatialiteLocation;
 }
 

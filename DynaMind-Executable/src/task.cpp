@@ -492,7 +492,7 @@ void Task::run()
         s.installStatusUpdater(path.str());
     }
 
-        if (vm.count("set-mod-spatialite")) {
+    if (vm.count("set-mod-spatialite")) {
 	    DM::SimulationConfig sc = s.getSimulationConfig();
 	    sc.setSpatialiteModuleLocation(vm["set-mod-spatialite"].as<string>());
 		s.setSimulationConfig(sc);

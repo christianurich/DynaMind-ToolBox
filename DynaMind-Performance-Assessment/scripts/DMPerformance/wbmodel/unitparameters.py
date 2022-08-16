@@ -207,14 +207,22 @@ class UnitParameters:
         # Register Modules
         catchment_model.register_native_plugin(
             self.get_default_folder() + "/libcd3core")
+        cd3_module_root_folder = self.get_default_folder()
+
+        if "/usr/local/bin/"  in cd3_module_root_folder:
+            cd3_module_root_folder = "/usr/local/share/DynaMind"
+        elif "/usr/bin/"  in cd3_module_root_folder:
+            cd3_module_root_folder = "/usr/share/DynaMind"
+
+
         catchment_model.register_native_plugin(
-            self.get_default_folder() + "/CD3Modules/libdance4water-nodes")
+            cd3_module_root_folder + "/CD3Modules/libdance4water-nodes")
         catchment_model.register_python_path(
-            self.get_default_folder() + "/CD3Modules/CD3Waterbalance/Module")
+            cd3_module_root_folder + "/CD3Modules/CD3Waterbalance/Module")
         catchment_model.register_python_path(
-            self.get_default_folder() + "/CD3Modules/CD3Waterbalance/WaterDemandModel")
+            cd3_module_root_folder + "/CD3Modules/CD3Waterbalance/WaterDemandModel")
         catchment_model.register_python_plugin(
-            self.get_default_folder() + "/CD3Modules/CD3Waterbalance/Module/cd3waterbalancemodules.py")
+            cd3_module_root_folder + "/CD3Modules/CD3Waterbalance/Module/cd3waterbalancemodules.py")
 
 
         # select the model based on the soil parameter types and carry this foward

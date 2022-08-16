@@ -29,9 +29,10 @@
 
 using namespace std;
 
-SimulationReader::SimulationReader(QIODevice* source) 
+SimulationReader::SimulationReader(QIODevice* source,  const DM::SimulationConfig & config) 
 {
 	source->open(QIODevice::ReadOnly);
+	settingsConfig = config;
 	id = 0;
 	QXmlSimpleReader r;
 	r.setContentHandler(this);
@@ -67,7 +68,7 @@ bool SimulationReader::startElement(const QString & namespaceURI,
 		return true;
 
 	if (qName == "Settings") {
-		settingsConfig = DM::SimulationConfig();
+		// settingsConfig = DM::SimulationConfig();
 		return true;
 	}
 	if (qName == "EPSG") {

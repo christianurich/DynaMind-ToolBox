@@ -81,7 +81,7 @@ struct DM_HELPER_DLL_EXPORT GroupEntry
 class DM_HELPER_DLL_EXPORT SimulationReader : QXmlDefaultHandler 
 {
 public:
-	SimulationReader(QIODevice* source);
+	SimulationReader(QIODevice* source, const DM::SimulationConfig & config);
 	QVector<ModuleEntry> getModules()  
 	{
 		return moduleEntries;
