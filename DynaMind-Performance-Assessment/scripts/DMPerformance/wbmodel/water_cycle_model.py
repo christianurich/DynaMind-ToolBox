@@ -72,8 +72,16 @@ class WaterCycleModel():
         # Register Modules
         self._cd3.register_native_plugin(
             self.get_default_folder() + "/libcd3core")
+        
+        cd3_module_root_folder = self.get_default_folder()
+        
+        if "/usr/local/bin/"  in cd3_module_root_folder:
+            cd3_module_root_folder = "/usr/local/share/DynaMind"
+        elif "/usr/bin/"  in cd3_module_root_folder:
+            cd3_module_root_folder = "/usr/share/DynaMind"
+
         self._cd3.register_native_plugin(
-            self.get_default_folder() + "/CD3Modules/libdance4water-nodes")
+            cd3_module_root_folder + "/CD3Modules/libdance4water-nodes")
 
         self._networks = {}
 
