@@ -178,7 +178,7 @@ class ClimateProjectionRainfall(Module):
         r = requests.get(url)
         log(str(r.status_code), Standard)
         log("returned request", Standard)
-        return pd.read_csv(StringIO(r.text)).iloc[:, [3]].to_numpy()
+        return pd.read_csv(StringIO(r.text)).iloc[:, [4]].to_numpy()
 
     def get_year(self, df, start_year, end_year, fraction):
         s2 = pd.DataFrame(df.groupby([lambda x: x.year]).sum())
