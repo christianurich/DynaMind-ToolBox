@@ -216,7 +216,7 @@ class ClimateProjection(Module):
         r = requests.get(url)
         log(str(r.status_code), Standard)
         log("returned request", Standard)
-        return pd.read_csv(StringIO(r.text)).iloc[:, [3]].to_numpy() - 273.15
+        return pd.read_csv(StringIO(r.text)).iloc[:, [4]].to_numpy() - 273.15
 
     def get_3day_average(self, df, start_year, end_year, fraction):
         sorted_values = df.loc[(df[0] > f'{start_year}-01-01') & (df[0] < f'{end_year}-12-30')].sort_values(by='rolling_mean2',
