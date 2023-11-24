@@ -25,6 +25,8 @@ IF(USEQT5)
     INCLUDE_DIRECTORIES(${Qt5Gui_INCLUDE_DIRS})
     INCLUDE_DIRECTORIES(${Qt5Test_INCLUDE_DIRS})
     ADD_DEFINITIONS(-DUSEQT5)
+    
+    
 ELSE()
     MESSAGE(STATUS "Using Qt4 for core")
     FIND_PACKAGE(Qt4 COMPONENTS QtCore QtGui QtXml QtTest REQUIRED)
@@ -83,7 +85,7 @@ ENDIF()
 
 
 ADD_SUBDIRECTORY(src/DMToolboxes)
-
+ADD_SUBDIRECTORY(3rdparty/sqlite3)
 
 IF(WITH_UNIT_TESTS)
     enable_testing()

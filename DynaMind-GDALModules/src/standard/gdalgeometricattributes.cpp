@@ -2,6 +2,7 @@
 #include "geometricattributeworker.h"
 #include "dmsimulation.h"
 #include "sqliteplow.h"
+#include <dmgdalsystem.h>
 
 #include <ogr_api.h>
 #include "../../3rdparty/sqlite3/sqlite3.h"
@@ -67,13 +68,14 @@ void GDALGeometricAttributes::init()
 void GDALGeometricAttributes::run_sql()
 {
 	sqlite3 *db;
-	int rc = sqlite3_open(vc.getDBID().c_str(), &db);
+	db = this->getGDALData("city")->getSQLDatabase();
+	// int rc = sqlite3_open(vc.getDBID().c_str(), &db);
 	sqlite3_enable_load_extension(db,1);
 
-	if( rc ){
-		DM::Logger(DM::Error) << "Failed to open database";
-		return;
-	}
+	// if( rc ){
+	// 	DM::Logger(DM::Error) << "Failed to open database";
+	// 	return;
+	// }
 
 	//Load spatialite
 	sqlite3_enable_load_extension(db,1);
@@ -100,7 +102,7 @@ void GDALGeometricAttributes::run_sql()
 	DM::Logger(DM::Standard) << query_stream.str();
 	execute_sql_statement(db, query_stream.str().c_str());
 
-	sqlite3_close(db);
+	//sqlite3_close(db);
 }
 
 void GDALGeometricAttributes::run_sql_threaded()

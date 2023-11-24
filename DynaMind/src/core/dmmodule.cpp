@@ -81,11 +81,11 @@ void Module::preRun()
 			v->addModuleAttributeFilter(attribute_filter);
 		}
 	}
-	if (this->SQLExclusive) {
-		DM::Logger(DM::Debug) << "close db connection";
-		sys->closeConnection();
-		reconnect_sys = sys;
-	}
+	// if (this->SQLExclusive) {
+	// 	DM::Logger(DM::Debug) << "close db connection";
+	// 	sys->closeConnection();
+	// 	reconnect_sys = sys;
+	// }
 }
 
 void Module::afterRun()
@@ -93,11 +93,11 @@ void Module::afterRun()
 
 	if (!this->GDALModule)
 		return;
-	if (this->SQLExclusive) {
-		DM::Logger(DM::Debug) << "reconnect db";
-		reconnect_sys->reConnect();
-		return;
-	}
+	// if (this->SQLExclusive) {
+	// 	DM::Logger(DM::Debug) << "reconnect db";
+	// 	reconnect_sys->reConnect();
+	// 	return;
+	// }
 
 	//Special hack to build datastrucutre correclty since this is not done in the pre run to prevent createLayer to be called
 	if (std::string(this->getClassName()).compare("DM_Hoststart_SFTP") == 0 ||

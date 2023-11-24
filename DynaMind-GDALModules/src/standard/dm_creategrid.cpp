@@ -1,6 +1,7 @@
 #include "dm_creategrid.h"
 #include <dmsimulation.h>
 #include <ogrsf_frmts.h>
+#include <dmgdalsystem.h>
 
 #include <sstream>
 
@@ -78,7 +79,7 @@ void DM_CreateGrid::run()
 		else
 			sql_stream << "SELECT ASWKT(ST_SquareGrid(ST_Envelope(geometry), " << grid_size << ")) FROM " << this->lead_view_name << " WHERE ogc_fid=" << f->GetFID();
 		this->execute_query(sql_stream.str().c_str(), true);
-		sqlite3_close(db);
+//		sqlite3_close(db);
 
 //		DM::Logger(DM::Standard) << writenFeatures;
 
@@ -110,11 +111,12 @@ void DM_CreateGrid::execute_query(const char *sql, bool cb ) {
 
 void DM_CreateGrid::initDatabase(){
 
-	int rc = sqlite3_open(this->lead_view.getDBID().c_str(), &db);
-	if( rc ){
-		fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
-		return;
-	}
+	// int rc = sqlite3_open(this->lead_view.getDBID().c_str(), &db);
+	// if( rc ){
+	// 	fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+	// 	return;
+	// }
+	db = this->getGDALData("city")->getSQLDatabase();
 	sqlite3_enable_load_extension(db,1);
     std::stringstream ss;
     ss << "SELECT load_extension('" <<  this->getSimulationConfig().getSpatialiteModuleLocation() << "')";

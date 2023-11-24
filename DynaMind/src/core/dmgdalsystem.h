@@ -33,6 +33,8 @@
 #include <ogr_api.h>
 #include <dmlogger.h>
 
+
+
 #include <map>
 #include <vector>
 
@@ -44,6 +46,7 @@ class GDALDataset;
 class GDALDriver;
 class OGRLayer;
 class OGRFeature;
+class sqlite3;
 
 namespace DM {
 /**
@@ -191,14 +194,19 @@ public:
 	void closeConnection();
 
 	void reConnect();
+
+	sqlite3 * getSQLDatabase() const;
+
 private:
 	GDALDataset							*poDS;
 	GDALDriver							*poDrive;
 	std::map<std::string, OGRLayer *>	viewLayer;
 	std::vector<std::string>			state_ids;
 
+
 	OGRLayer *createLayer(const View &v);
 	GDALSystem *predecessor;
+	sqlite3 *db;
 	std::vector<DM::GDALSystem*> sucessors;
 	QString DBID;
 	std::string workingDir;

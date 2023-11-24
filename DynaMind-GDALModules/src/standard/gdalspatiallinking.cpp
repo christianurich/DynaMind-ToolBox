@@ -2,6 +2,8 @@
 #include <sstream>
 #include <ogr_feature.h>
 #include <dmsimulation.h>
+#include <dmgdalsystem.h>
+
 #include "../../3rdparty/sqlite3/sqlite3.h"
 
 DM_DECLARE_CUSTOM_NODE_NAME(GDALSpatialLinking, Spatial Linking, Linking)
@@ -123,12 +125,12 @@ void GDALSpatialLinking::run()
 			query << " WHERE " << filter;
 
 
-		sqlite3 *db;
-		int rc =  sqlite3_open(this->leadingView.getDBID().c_str(), &db);
-		if( rc ){
-			DM::Logger(DM::Error) <<  "Can't open database: " << sqlite3_errmsg(db);
-			return;
-		}
+		sqlite3 *db = this->getGDALData("city")->getSQLDatabase();
+		// int rc =  sqlite3_open(this->leadingView.getDBID().c_str(), &db);
+		// if( rc ){
+		// 	DM::Logger(DM::Error) <<  "Can't open database: " << sqlite3_errmsg(db);
+		// 	return;
+		// }
 		sqlite3_enable_load_extension(db,1);
 
         std::stringstream ss;
@@ -140,7 +142,7 @@ void GDALSpatialLinking::run()
 		execute_query1(db,query_spatail_index.str().c_str());
 
 		execute_query1(db,query.str().c_str());
-		sqlite3_close(db);
+		//sqlite3_close(db);
 
 
 

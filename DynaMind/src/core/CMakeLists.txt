@@ -22,7 +22,7 @@ ELSE()
 ENDIF()
 
 IF(PYTHON_EMBEDDING)
-    TARGET_LINK_LIBRARIES(dynamindcore ${PYTHON_LIBRARIES})
+    TARGET_LINK_LIBRARIES(dynamindcore ${PYTHON_LIBRARIES} sqlite3_dm)
     #ADD_DEPENDENCIES(dynamindcore pydynamindgen pydmtoolboxgen)
 ENDIF()
 

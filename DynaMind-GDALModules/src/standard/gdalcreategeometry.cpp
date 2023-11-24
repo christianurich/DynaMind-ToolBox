@@ -1,5 +1,5 @@
 #include "gdalcreategeometry.h"
-
+#include <dmgdalsystem.h>
 #include <sstream>
 
 
@@ -24,11 +24,12 @@ void GDALCreateGeometry::execute_query(const char *sql, bool cb ) {
 
 void GDALCreateGeometry::initDatabase(){
 
-    int rc = sqlite3_open(this->resultView.getDBID().c_str(), &db);
-    if( rc ){
-        fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
-        return;
-    }
+    // int rc = sqlite3_open(this->resultView.getDBID().c_str(), &db);
+    // if( rc ){
+    //     fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+    //     return;
+    // }
+    db = this->getGDALData("city")->getSQLDatabase();
     sqlite3_enable_load_extension(db,1);
 
     std::stringstream ss;
@@ -214,7 +215,7 @@ void GDALCreateGeometry::run()
     DM::Logger(DM::Standard) << sql_stream.str().c_str();
     this->execute_query(sql_stream.str().c_str(), true);
 
-    sqlite3_close(db);
+    //sqlite3_close(db);
 }
 
 

@@ -6,6 +6,7 @@
 #include <ogr_feature.h>
 #include <dmsimulation.h>
 #include "../../3rdparty/sqlite3/sqlite3.h"
+#include <dmgdalsystem.h>
 
 DM_DECLARE_CUSTOM_NODE_NAME(DMSelector, Selector, Linking)
 
@@ -142,11 +143,12 @@ void DMSelector::run()
 
 
 	sqlite3 *db;
-	int rc =  sqlite3_open(this->leadingView.getDBID().c_str(), &db);
-	if( rc ){
-		DM::Logger(DM::Error) <<  "Can't open database: " << sqlite3_errmsg(db);
-		return;
-	}
+	// int rc =  sqlite3_open(this->leadingView.getDBID().c_str(), &db);
+	// if( rc ){
+	// 	DM::Logger(DM::Error) <<  "Can't open database: " << sqlite3_errmsg(db);
+	// 	return;
+	// }
+	db = this->getGDALData("city")->getSQLDatabase();
 	sqlite3_enable_load_extension(db,1);
 
     std::stringstream ss;
@@ -170,7 +172,7 @@ void DMSelector::run()
 	execute_query1(db,query_spatail_index.str().c_str());
 
 	execute_query1(db,query.str().c_str());
-	sqlite3_close(db);
+	//sqlite3_close(db);
 
 	DM::Logger(DM::Standard) << query.str();
 

@@ -6,6 +6,7 @@
 #include "dmgroup.h"
 #include "../../3rdparty/sqlite3/sqlite3.h"
 #include "guisqlcalculator.h"
+#include <dmgdalsystem.h>
 
 DM_DECLARE_CUSTOM_NODE_NAME(DM_SQliteCalculator, SQlite Query, Data Handling)
 
@@ -242,12 +243,13 @@ void DM_SQliteCalculator::run()
 	}
 
 	sqlite3 *db;
-	int rc = sqlite3_open(this->leading_view->getDBID().c_str(), &db);
-	if( rc ){
-		DM::Logger(DM::Error) << "Can't open database: " << sqlite3_errmsg(db);
-		this->setStatus(DM::MOD_EXECUTION_ERROR);
-		return;
-	}
+	// int rc = sqlite3_open(this->leading_view->getDBID().c_str(), &db);
+	// if( rc ){
+	// 	DM::Logger(DM::Error) << "Can't open database: " << sqlite3_errmsg(db);
+	// 	this->setStatus(DM::MOD_EXECUTION_ERROR);
+	// 	return;
+	// }
+	db = this->getGDALData("city")->getSQLDatabase();
 	sqlite3_enable_load_extension(db,1);
 
     std::stringstream ss;
@@ -282,7 +284,7 @@ void DM_SQliteCalculator::run()
 
 	execute_query(db,query.str().c_str());
 	DM::Logger(DM::Standard) << "End Syncronise DB";
-	sqlite3_close(db);
+	//sqlite3_close(db);
 
 
 }

@@ -37,7 +37,7 @@
 
 #include <QUuid>
 #include <QFile>
-
+#include "../../3rdparty/sqlite3/sqlite3.h"
 #include <dmviewcontainer.h>
 
 namespace DM {
@@ -80,11 +80,24 @@ GDALSystem::GDALSystem(int EPSG, std::string workingDir, bool keepDatabaseFile) 
 		DM::Logger(DM::Error) << "couldn't create source";
 	}
 
+
+	int rc =  sqlite3_open(dbname.toStdString().c_str(), &db);
+		if( rc ){
+			std::cout <<  "Can't open database: " << sqlite3_errmsg(db) << std::endl; 
+			DM::Logger(DM::Error) <<  "Can't open database: " << sqlite3_errmsg(db);
+		} else{
+			std::cout <<  "Open database"  << std::endl; 
+		}
+
+
+
 	//Create State ID
 	this->state_ids.push_back(QUuid::createUuid().toString().toStdString());
 
 	predecessor = NULL;
 	this->EPSG = EPSG;
+
+	
 
 
 	OGRSpatialReference* oSourceSRS;
@@ -108,6 +121,10 @@ GDALSystem::GDALSystem(int EPSG, std::string workingDir, bool keepDatabaseFile) 
 void GDALSystem::setGDALDatabase(const string & database)
 {
 	GDALClose(poDS);
+	if (db) {
+		sqlite3_close(db);
+		db = NULL;
+	}
 
 	DBID = QUuid::createUuid().toString();
 
@@ -129,6 +146,17 @@ void GDALSystem::setGDALDatabase(const string & database)
 
 	poDS = (GDALDataset*) GDALOpenEx( dest.toStdString().c_str(), GDAL_OF_VECTOR | GDAL_OF_UPDATE,NULL, options, NULL );
 	//poDS = poDrive->GDALOpenEx(dest.toStdString().c_str(), true);
+
+
+	int rc =  sqlite3_open(dest.toStdString().c_str(), &db);
+		if( rc ){
+			std::cout <<  "Can't open database: " << sqlite3_errmsg(db) << std::endl; 
+			DM::Logger(DM::Error) <<  "Can't open database: " << sqlite3_errmsg(db);
+		} else{
+			std::cout <<  "Ooen database"  << std::endl; 
+		}
+
+	
 
 	//Create new state
 	state_ids.push_back(QUuid::createUuid().toString().toStdString());
@@ -370,7 +398,13 @@ void GDALSystem::closeConnection()
 		// OGRDataSource::DestroyDataSource(poDS);
 		DM::Logger(DM::Debug) << "close connection";
 		GDALClose(poDS);
+
+
 		poDS = NULL;
+	}
+	if (db) {
+		sqlite3_close(db);
+		db = NULL;
 	}
 }
 
@@ -384,6 +418,14 @@ void GDALSystem::reConnect() {
 		std::string viewname = it->first;
 		viewLayer[it->first] = poDS->GetLayerByName(viewname.c_str());
 	}
+		int rc =  sqlite3_open( this->getDBID().c_str(), &db);
+		if( rc ){
+			std::cout <<  "Can't open database: " << sqlite3_errmsg(db) << std::endl; 
+			DM::Logger(DM::Error) <<  "Can't open database: " << sqlite3_errmsg(db);
+		} else{
+			std::cout <<  "Open database"  << std::endl; 
+		}
+
 }
 
 string GDALSystem::getCurrentStateID()
@@ -391,6 +433,10 @@ string GDALSystem::getCurrentStateID()
 	return this->state_ids[state_ids.size()-1];
 }
 
+sqlite3 * GDALSystem::getSQLDatabase() const
+{
+	return this->db;
+}
 
 string GDALSystem::getDBID() const
 {
@@ -399,9 +445,14 @@ string GDALSystem::getDBID() const
 
 GDALSystem::~GDALSystem()
 {
+	if (db) {
+		sqlite3_close(db);
+		db = NULL;
+	}
 	if (poDS) {
 		GDALClose(poDS);
 		poDS = NULL;
+
 
 		//Delete Database
 		QString dbname =  QString::fromStdString(this->getDBID());

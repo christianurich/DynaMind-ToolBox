@@ -39,7 +39,7 @@ SimulationConfig::SimulationConfig()
 	#ifdef WIN32
         spatialiteLocation = "mod_spatialite";
     #else
-        spatialiteLocation = "/usr/local/lib/mod_spatialite";
+        spatialiteLocation = "mod_spatialite.so";
     #endif
 //
     defaultModulePath = modulePath();
