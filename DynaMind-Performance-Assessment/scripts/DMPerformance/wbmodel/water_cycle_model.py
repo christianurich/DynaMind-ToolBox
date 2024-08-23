@@ -212,6 +212,7 @@ class WaterCycleModel():
             self._nodes[storage["demand_1"]].link_storage([demand_port[0], demand_port[1]["in_1"], demand_port[1]["out_1"]])
         if "demand_2" in storage:
             self._nodes[storage["demand_2"]].link_storage([demand_port[0], demand_port[1]["in_2"], demand_port[1]["out_2"]])
+            
 
     def _create_nodes(self, network):
         nodes = {}
