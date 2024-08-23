@@ -238,11 +238,11 @@ class UrbanMetabolismModel(Module):
             if s.IsFieldSet("loss_stream_1_id"):
                 if s.GetFieldAsInteger("loss_stream_1_id") > 0:
                     storage["loss_1"] = LotStream(s.GetFieldAsInteger("loss_stream_1_id"))    
-                    storage["loss_1_value"] = LotStream(s.GetFieldAsDouble("loss_1_value"))    
+                    storage["loss_1_value"] = s.GetFieldAsDouble("loss_1_value")    
             if s.IsFieldSet("loss_stream_2_id"):
                 if s.GetFieldAsInteger("loss_2") > 0:
                     storage["loss_2"] = LotStream(s.GetFieldAsInteger("loss_stream_2_id"))
-                    storage["loss_2_value"] = LotStream(s.GetFieldAsDouble("loss_2_value"))             
+                    storage["loss_2_value"] = s.GetFieldAsDouble("loss_2_value")          
 
             storages = self._storages[template_id]
             storages.append(storage)
