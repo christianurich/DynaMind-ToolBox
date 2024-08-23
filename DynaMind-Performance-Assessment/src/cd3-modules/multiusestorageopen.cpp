@@ -52,7 +52,7 @@ MultiUseStorageOpen::~MultiUseStorageOpen() {
 
 
 
-int MultiUseStorage::f(ptime time, int dt) {
+int MultiUseStorageOpen::f(ptime time, int dt) {
 	(void) time;
 
 	//default returns
@@ -86,6 +86,7 @@ int MultiUseStorage::f(ptime time, int dt) {
 			current_volume = 0;
 
 		}
+
 		total_provided_v+=provided_v;
 
 		if (i < 3){
@@ -111,7 +112,7 @@ int MultiUseStorage::f(ptime time, int dt) {
 }
 
 
-bool MultiUseStorage::init(ptime start, ptime end, int dt) {
+bool MultiUseStorageOpen::init(ptime start, ptime end, int dt) {
 	(void) start;
 	(void) end;
 

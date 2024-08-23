@@ -14,6 +14,7 @@ public:
 
 	bool init(ptime start, ptime end, int dt);
 	int f(ptime time, int dt);
+
 private:
 	double current_volume;
 	double storage_volume;
@@ -22,6 +23,15 @@ private:
 
 	Flow in_sw;
 	Flow out_sw;
+
+
+	Flow q_in_0;
+	Flow q_in_1;
+	Flow q_in_2;
+
+	Flow q_out_0;
+	Flow q_out_1;
+	Flow q_out_2;
 
 	std::vector<Flow*> v_in_q;
 	std::vector<Flow*> v_out_q;
