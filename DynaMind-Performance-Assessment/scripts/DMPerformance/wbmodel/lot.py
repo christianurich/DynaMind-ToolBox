@@ -217,7 +217,10 @@ class Lot:
 
             current_loss_stream = self._internal_streams[storage["loss_1"]]
 
-            # combined_loss = self._sum_streams([current_loss_stream, f_loss_stream])
+            combined_loss = self._sum_streams([current_loss_stream, f_loss_stream])
+
+
+            # f_loss_stream = self._add_flow_probe(combined_loss[0], combined_loss[1])
 
             # current_loss_stream[0] = combined_loss[0]
             # current_loss_stream[1] = combined_loss[1]
@@ -232,8 +235,8 @@ class Lot:
 
             combined_loss = self._sum_streams([current_loss_stream, f_loss_stream])
 
-            current_loss_stream[0] = combined_loss[0]
-            current_loss_stream[1] = combined_loss[1]
+            # current_loss_stream[0] = combined_loss[0]
+            # current_loss_stream[1] = combined_loss[1]
 
 
     def _create_demand_node(self, residents: float):
