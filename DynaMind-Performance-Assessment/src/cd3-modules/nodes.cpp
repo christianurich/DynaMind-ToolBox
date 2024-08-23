@@ -12,6 +12,7 @@
 #include "monthlyevo.h"
 #include "redistributer.h"
 #include "multiusestorage.h"
+#include "multiusestorageopen.h"
 
 #include <noderegistry.h>
 #include <nodefactory.h>
@@ -39,6 +40,7 @@ extern "C" {
 				registry->addNodeFactory(new NodeFactory<MonthlyEvo>(SOURCE));
 				registry->addNodeFactory(new NodeFactory<Redistributer>(SOURCE));
 				registry->addNodeFactory(new NodeFactory<MultiUseStorage>(SOURCE));
+                registry->addNodeFactory(new NodeFactory<MultiUseStorageOpen>(SOURCE));
 
 	}
 

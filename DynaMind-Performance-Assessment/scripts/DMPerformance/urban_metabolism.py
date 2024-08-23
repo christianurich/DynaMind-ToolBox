@@ -235,6 +235,14 @@ class UrbanMetabolismModel(Module):
                 storage["demand_1"] = LotStream(s.GetFieldAsInteger("demand_stream_1_id"))
             if s.GetFieldAsInteger("demand_stream_2_id") > 0:
                 storage["demand_2"] = LotStream(s.GetFieldAsInteger("demand_stream_2_id"))
+            if s.IsFieldSet("loss_stream_1_id"):
+                if s.GetFieldAsInteger("loss_stream_1_id") > 0:
+                    storage["loss_1"] = LotStream(s.GetFieldAsInteger("loss_stream_1_id"))    
+                    storage["loss_1_value"] = LotStream(s.GetFieldAsDouble("loss_1_value"))    
+            if s.IsFieldSet("loss_stream_2_id"):
+                if s.GetFieldAsInteger("loss_2") > 0:
+                    storage["loss_2"] = LotStream(s.GetFieldAsInteger("loss_stream_2_id"))
+                    storage["loss_2_value"] = LotStream(s.GetFieldAsDouble("loss_2_value"))             
 
             storages = self._storages[template_id]
             storages.append(storage)
@@ -502,13 +510,13 @@ def _create_lot(id):
 
 
 if __name__ == '__main__':
-    sys.path.insert(0, "/Users/christianurich/Documents/dynamind/build/output/")
+    sys.path.insert(0, "/workspaces/DynaMind-ToolBox/build/output/")
 
     for s in [10, 100]:
         start = time.time()
         lots = {}
         for i in range(s):
             lots[i] = (_create_lot(i))
-        WaterCycleModel(lots=lots, library_path="/Users/christianurich/Documents/dynamind/build/output/")
+        WaterCycleModel(lots=lots, library_path="/workspaces/DynaMind-ToolBox/build/output/")
         print(s, time.time() - start)
 

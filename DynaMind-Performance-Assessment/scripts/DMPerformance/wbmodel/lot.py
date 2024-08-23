@@ -171,9 +171,14 @@ class Lot:
         f[0] = value
         return f
 
+    def _create_const_source(self, value: float) -> cd3.Flow:
+        cs = self._cd3.add_node("ConstSource")
+        cs.setParameter("const_flow", self._create_const_flow(value))
+        return list((cs, "out"))
+
     def _add_storage(self, units: int, storage: dict) -> None:
 
-        s = self._cd3.add_node("MultiUseStorage")
+        s = self._cd3.add_node("MultiUseStorageOpen")
         s.setDoubleParameter("storage_volume", storage["volume"] * units)
 
         self._lot_storage_reporting[self._id][storage["id"]] = s
@@ -203,6 +208,33 @@ class Lot:
             f_demand_stream = self._add_flow_probe(s, "q_out_2")
             demand_stream[0] = f_demand_stream[0]
             demand_stream[1] = f_demand_stream[1]
+
+        if "loss_1" in storage:
+            loss_stream = self._create_const_source(storage["loss_1_value"])
+            self._cd3.add_connection(loss_stream[0], loss_stream[1], s, "q_in_3")
+
+            f_loss_stream = self._add_flow_probe(s, "q_out_3")
+
+            current_loss_stream = self._internal_streams[storage["loss_1"]]
+
+            combined_loss = self._sum_streams([current_loss_stream, f_loss_stream])
+
+            current_loss_stream[0] = combined_loss[0]
+            current_loss_stream[1] = combined_loss[1]
+
+        if "loss_2" in storage:
+            loss_stream = self._create_const_source(storage["loss_2_value"])
+            self._cd3.add_connection(loss_stream[0], loss_stream[1], s, "q_in_4")
+
+            f_loss_stream = self._add_flow_probe(s, "q_out_4")
+
+            current_loss_stream = self._internal_streams[storage["loss_2"]]
+
+            combined_loss = self._sum_streams([current_loss_stream, f_loss_stream])
+
+            current_loss_stream[0] = combined_loss[0]
+            current_loss_stream[1] = combined_loss[1]
+
 
     def _create_demand_node(self, residents: float):
         # Produces non-potable (out_np) and potable demands (out_p)
