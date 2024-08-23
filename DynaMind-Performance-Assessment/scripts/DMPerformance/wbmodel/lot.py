@@ -220,10 +220,10 @@ class Lot:
             combined_loss = self._sum_streams([current_loss_stream, f_loss_stream])
 
 
-            # f_loss_stream = self._add_flow_probe(combined_loss[0], combined_loss[1])
+            f_loss_stream = self._add_flow_probe(combined_loss[0], combined_loss[1])
 
-            # current_loss_stream[0] = combined_loss[0]
-            # current_loss_stream[1] = combined_loss[1]
+            current_loss_stream[0] = f_loss_stream[0]
+            current_loss_stream[1] = f_loss_stream[1]
 
         if "loss_2" in storage:
             loss_stream = self._create_const_source(storage["loss_2_value"])
