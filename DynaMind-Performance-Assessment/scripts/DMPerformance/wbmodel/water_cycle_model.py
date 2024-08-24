@@ -100,11 +100,7 @@ class WaterCycleModel():
         self._build_network()
         self._cd3.init_nodes()
         self._cd3.start(self.start_date)
-        #self._reporting(timeseries = True)
-        #print('FLOW PROBES', self._flow_probes)
-        # for key, storage in self._lot_storage_reporting.items():
-        #     for id, s in storage.items():
-        #         print(key, id, s,  sum(s.get_state_value_as_double_vector('provided_volume')))
+
 
     def get_internal_storage_volumes_lot(self, parcel_id):
         total_provided=0
@@ -202,7 +198,18 @@ class WaterCycleModel():
         for name, network in self._networks.items():
             self._create_network(name, network)
 
-    # option to connect storage back to multiple uses
+    def _create_const_source(self, value: float) -> cd3.Flow:
+        cs = self._cd3.add_node("ConstSource")
+        cs.setParameter("const_flow", self._create_const_flow(value))
+        return list((cs, "out"))
+
+    def _create_const_source(self, value: float) -> cd3.Flow:
+        cs = self._cd3.add_node("ConstSource")
+        cs.setParameter("const_flow", self._create_const_flow(value))
+        return list((cs, "out"))
+
+
+    # option to connect sub catchment storage back to multiple uses
     def _create_storage(self, storage):
         demand_port = self._nodes[storage["inflow"]].add_storage(storage)
         self._storage_reporting[storage["id"]] = demand_port[0] # link to actual storage
@@ -212,7 +219,14 @@ class WaterCycleModel():
             self._nodes[storage["demand_1"]].link_storage([demand_port[0], demand_port[1]["in_1"], demand_port[1]["out_1"]])
         if "demand_2" in storage:
             self._nodes[storage["demand_2"]].link_storage([demand_port[0], demand_port[1]["in_2"], demand_port[1]["out_2"]])
+
+        if "loss_1" in storage:
+            loss_stream = self._create_const_source(storage["loss_1_value"])
+            self._cd3.add_connection(loss_stream[0], loss_stream[1], demand_port[0], demand_port[1]["in_3"])
             
+            #  location 2 is ignored
+            self._nodes[storage["loss_1"]].link_storage([demand_port[0], demand_port[1]["in_3"], demand_port[1]["out_3"]], addition=True)
+
 
     def _create_nodes(self, network):
         nodes = {}

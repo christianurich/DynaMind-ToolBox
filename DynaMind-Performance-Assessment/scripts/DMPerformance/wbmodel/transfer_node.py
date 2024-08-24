@@ -13,7 +13,7 @@ class TransferNode:
         :param storage:
         :return:
         """
-        s = self._cd3.add_node("MultiUseStorage")
+        s = self._cd3.add_node("MultiUseStorageOpen")
         s.setDoubleParameter("storage_volume", storage["volume"])
 
         self._cd3.add_connection(self.out_port[0], self.out_port[1], s, "in_sw")
@@ -22,14 +22,34 @@ class TransferNode:
         return s, {"in_0": "q_in_0",
                    "in_1": "q_in_1",
                    "in_2": "q_in_2",
+                   "in_3": "q_in_3",
+                   "in_4": "q_in_4",
                    "out_0": "q_out_0",
                    "out_1": "q_out_1",
                    "out_2": "q_out_2",
-                   }
+                   "out_3": "q_out_3",
+                   "out_4": "q_out_4",
+                }
 
-    def link_storage(self, s):
-        self._cd3.add_connection(self.out_port[0], self.out_port[1], s[0], s[1])
-        self._out_port = (s[0], s[2])
+    def link_storage(self, s, addition=False):
+        # when using addition, pos 2 in s is not needed
+        if not addition:
+            self._cd3.add_connection(self.out_port[0], self.out_port[1], s[0], s[1])
+            self._out_port = (s[0], s[2])
+        else:
+            # get current out port
+            self._out_port = self._sum_streams([self.out_port, [s[0], s[2]]])
+
+
+
+    def _sum_streams(self, streams: []) -> list:
+        mixer = self._cd3.add_node("Mixer")
+        mixer.setIntParameter("num_inputs", len(streams))
+        self._cd3.init_nodes()
+        for idx, s in enumerate(streams):
+            s: list
+            self._cd3.add_connection(s[0], s[1], mixer, f"in_{idx}")
+        return list((mixer, "out"))
 
     def add_flow_probe(self):
         flow_probe = self._cd3.add_node("FlowProbe")
