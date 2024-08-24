@@ -211,6 +211,7 @@ class WaterCycleModel():
 
     # option to connect sub catchment storage back to multiple uses
     def _create_storage(self, storage):
+        log(f"Add wb storage}", Warning)
         demand_port = self._nodes[storage["inflow"]].add_storage(storage)
         self._storage_reporting[storage["id"]] = demand_port[0] # link to actual storage
         if "demand" in storage:
@@ -221,6 +222,7 @@ class WaterCycleModel():
             self._nodes[storage["demand_2"]].link_storage([demand_port[0], demand_port[1]["in_2"], demand_port[1]["out_2"]])
 
         if "loss_1" in storage:
+            log(f"Add wb storage {str(storage["loss_1_value"])}", Warning)
             loss_stream = self._create_const_source(storage["loss_1_value"])
             self._cd3.add_connection(loss_stream[0], loss_stream[1], demand_port[0], demand_port[1]["in_3"])
             
