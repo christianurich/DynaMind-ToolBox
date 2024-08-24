@@ -211,7 +211,7 @@ class WaterCycleModel():
 
     # option to connect sub catchment storage back to multiple uses
     def _create_storage(self, storage):
-        log(f"Add wb storage}", Warning)
+        log(f"Add wb storage", Warning)
         demand_port = self._nodes[storage["inflow"]].add_storage(storage)
         self._storage_reporting[storage["id"]] = demand_port[0] # link to actual storage
         if "demand" in storage:
