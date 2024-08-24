@@ -198,11 +198,11 @@ class WaterCycleModel():
         for name, network in self._networks.items():
             self._create_network(name, network)
 
-    def _create_const_source(self, value: float) -> cd3.Flow:
-        cs = self._cd3.add_node("ConstSource")
-        cs.setParameter("const_flow", self._create_const_flow(value))
-        return list((cs, "out"))
-
+    def _create_const_flow(self, value: float) -> cd3.Flow:
+        f = cd3.Flow()
+        f[0] = value
+        return f
+        
     def _create_const_source(self, value: float) -> cd3.Flow:
         cs = self._cd3.add_node("ConstSource")
         cs.setParameter("const_flow", self._create_const_flow(value))
