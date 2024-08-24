@@ -260,6 +260,15 @@ class UrbanMetabolismModel(Module):
                 storage["demand_1"] = "sub_" + str(s.GetFieldAsInteger("demand_stream_1_id"))
             if s.GetFieldAsInteger("demand_stream_2_id") > 0:
                 storage["demand_2"] = "sub_" + str(s.GetFieldAsInteger("demand_stream_2_id"))
+                
+            if s.IsFieldSet("loss_stream_1_id"):
+                if s.GetFieldAsInteger("loss_stream_1_id") > 0:
+                    storage["loss_1"] = LotStream(s.GetFieldAsInteger("loss_stream_1_id"))    
+                    storage["loss_1_value"] = s.GetFieldAsDouble("loss_1_value")    
+            if s.IsFieldSet("loss_stream_2_id"):
+                if s.GetFieldAsInteger("loss_2") > 0:
+                    storage["loss_2"] = LotStream(s.GetFieldAsInteger("loss_stream_2_id"))
+                    storage["loss_2_value"] = s.GetFieldAsDouble("loss_2_value")     
 
             wb_sub_storages[s.GetFID()] = storage
 
